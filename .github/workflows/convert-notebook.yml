@@ -1,12 +1,12 @@
 
-name: Convert Notebook to Python
+name: Convert Notebook to Python and Commit
 
 on:
   push:
-    branches: [ main ]   # or any branch you want
+    branches: [ main ]   # adjust if needed
 
 jobs:
-  convert-notebook:
+  convert-and-commit:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,4 +26,14 @@ jobs:
       - name: Convert notebook to Python script
         run: |
           jupytext --to py:percent noyse.ipynb
+
+      - name: Commit and push converted file
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add noyse.py
+          git commit -m "Auto-convert noyse.ipynb to noyse.py [skip ci]" || echo "No changes to commit"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

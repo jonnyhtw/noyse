@@ -1,0 +1,29 @@
+
+name: Simple Notebook Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-notebook:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install Jupyter
+        run: |
+          pip install notebook
+
+      - name: Run notebook
+        run: |
+

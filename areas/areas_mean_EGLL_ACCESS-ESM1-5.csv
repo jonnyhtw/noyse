@@ -1,9 +1,9 @@
 Key,Value
-historical,5518502.042305114
-ssp126,5570830.675656335
-ssp370,5572847.615210804
-ssp585,5616291.914187052
+historical,5518502.042597856
+ssp126,5570830.433052133
+ssp370,5572847.373017876
+ssp585,5616291.665753313
 historical_percentage_change_cf_historical,0.0
-ssp126_percentage_change_cf_historical,0.9482398112760991
-ssp370_percentage_change_cf_historical,0.98478848950448
-ssp585_percentage_change_cf_historical,1.772036526076759
+ssp126_percentage_change_cf_historical,0.9482354097243872
+ssp370_percentage_change_cf_historical,0.984784095403483
+ssp585_percentage_change_cf_historical,1.7720320188451382

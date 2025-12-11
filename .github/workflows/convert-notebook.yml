@@ -5,14 +5,21 @@ on:
   push:
     branches: [ main ]
 
+permissions:
+  contents: write    # <-- allow writing to repo contents
+
 jobs:
   convert-and-commit:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true   # default is true; keeps an auth token in git config
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -21,22 +28,26 @@ jobs:
           python -m pip install --upgrade pip
           pip install jupytext
 
-      - name: Debug files before conversion
+      - name: Convert notebooks
         run: |
-          ls -al
-
-      - name: Convert notebook to Python script
-        run: |
+          # Convert a single notebook:
           jupytext --to py:percent noyse.ipynb
+          # Or convert all:
+          # jupytext --to py:percent *.ipynb
           ls -al
 
-      - name: Commit and push converted file
+      - name: Configure auth for push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add noyse.py || echo "noyse.py not found!"
-          git commit -m "Auto-convert noyse.ipynb to noyse.py [skip ci]" || echo "No changes to commit"
-          git push
+          # Make sure git uses the token for this remote
+          git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit and push converted file
+        run: |
+          git add noyse.py
+          git commit -m "Auto-convert noyse.ipynb to noyse.py [skip ci]" || echo "No changes to commit"
+          git push
 

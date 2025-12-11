@@ -1,0 +1,29 @@
+
+name: Convert Notebook to Python
+
+on:
+  push:
+    branches: [ main ]   # or any branch you want
+
+jobs:
+  convert-notebook:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Jupytext
+        run: |
+          python -m pip install --upgrade pip
+          pip install jupytext
+
+      - name: Convert notebook to Python script
+        run: |
+          jupytext --to py:percent noyse.ipynb
+

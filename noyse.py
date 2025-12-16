@@ -18,6 +18,7 @@ import csv
 from scipy.stats import qmc
 import math
 import os
+import pdb
 
 from matplotlib.ticker import FormatStrFormatter
 import pickle
@@ -46,6 +47,7 @@ from tqdm.notebook import tqdm
 import copy
 import csv
 import math
+
 import os
 import string
 import sys
@@ -68,8 +70,6 @@ from scipy.ndimage import gaussian_filter1d
 from shapely.geometry import Polygon
 from tqdm import tqdm
 # -
-
-a =                        1
 
 
 

@@ -12,60 +12,60 @@
 #     name: python3
 # ---
 
-# + active=""
-# import copy
-# import csv
-# from scipy.stats import qmc
-# import math
-# import os
-# from matplotlib.ticker import FormatStrFormatter
-# import pickle
-# import matplotlib.ticker as ticker
-# import jupyter_black
-#
-# jupyter_black.load()
-# import matplotlib.pyplot as plt
-# import numpy as np
-# import seaborn as sns
-# import string
-# import cartopy.io.img_tiles as cimgt
-# import matplotlib.patches as patches
-# import matplotlib.pyplot as plt
-# import numpy as np
-# import pandas as pd
-# import scipy
-# import seaborn as sns
-# import xarray as xr
-# from IPython.core.interactiveshell import InteractiveShell
-# from matplotlib.ticker import (
-#     FormatStrFormatter,
-# )
-# from rich.jupyter import print
-# from tqdm.notebook import tqdm
-# import copy
-# import csv
-# import math
-# import os
-# import string
-# import sys
-# import cartopy.crs as ccrs
-# import cartopy.io.img_tiles as cimgt
-# import pandas as pd
-# import matplotlib.patches as patches
-# from matplotlib.patches import Ellipse
-# import matplotlib.image as mpimg
-# from mpl_toolkits.axes_grid1.inset_locator import inset_axes
-# import matplotlib.pyplot as plt
-# import numpy as np
-#
-# InteractiveShell.ast_node_interactivity = "all"
-# from matplotlib.colors import TwoSlopeNorm
-# import scipy
-# import seaborn as sns
-# from pyproj import Geod
-# from scipy.ndimage import gaussian_filter1d
-# from shapely.geometry import Polygon
-# from tqdm import tqdm
+# +
+import copy
+import csv
+from scipy.stats import qmc
+import math
+import os
+from matplotlib.ticker import FormatStrFormatter
+import pickle
+import matplotlib.ticker as ticker
+import jupyter_black
+
+jupyter_black.load()
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+import string
+import cartopy.io.img_tiles as cimgt
+import matplotlib.patches as patches
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import scipy
+import seaborn as sns
+import xarray as xr
+from IPython.core.interactiveshell import InteractiveShell
+from matplotlib.ticker import (
+    FormatStrFormatter,
+)
+from rich.jupyter import print
+from tqdm.notebook import tqdm
+import copy
+import csv
+import math
+import os
+import string
+import sys
+import cartopy.crs as ccrs
+import cartopy.io.img_tiles as cimgt
+import pandas as pd
+import matplotlib.patches as patches
+from matplotlib.patches import Ellipse
+import matplotlib.image as mpimg
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
+import matplotlib.pyplot as plt
+import numpy as np
+
+InteractiveShell.ast_node_interactivity = "all"
+from matplotlib.colors import TwoSlopeNorm
+import scipy
+import seaborn as sns
+from pyproj import Geod
+from scipy.ndimage import gaussian_filter1d
+from shapely.geometry import Polygon
+from tqdm import tqdm
 # -
 
 

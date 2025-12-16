@@ -68,6 +68,8 @@
 # from tqdm import tqdm
 # -
 
+
+
 airport_coordinates = {
     "EBBR": [50.90080, 4.48400],
     "EDDF": [50.03333, 8.57056],

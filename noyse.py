@@ -3,16 +3,16 @@
 #   jupytext:
 #     text_representation:
 #       extension: .py
-#       format_name: percent
-#       format_version: '1.3'
-#       jupytext_version: 1.18.1
+#       format_name: light
+#       format_version: '1.5'
+#       jupytext_version: 1.16.3
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
 
-# %% [raw]
+# + active=""
 # import copy
 # import csv
 # from scipy.stats import qmc
@@ -66,10 +66,8 @@
 # from scipy.ndimage import gaussian_filter1d
 # from shapely.geometry import Polygon
 # from tqdm import tqdm
+# -
 
-# %%
-
-# %%
 airport_coordinates = {
     "EBBR": [50.90080, 4.48400],
     "EDDF": [50.03333, 8.57056],
@@ -103,7 +101,6 @@ airport_coordinates = {
     "LTFM": [41.27528, 28.75194],
 }
 
-# %%
 airport_codes = [
     "EBBR",
     "EDDF",
@@ -137,7 +134,6 @@ airport_codes = [
     "LTFM",
 ]
 
-# %%
 runway_bearings = {
     "EBBR": 14.44,
     "EDDF": 69.57,
@@ -171,19 +167,19 @@ runway_bearings = {
     "LTFM": 179.11,
 }
 
-# %% editable=true slideshow={"slide_type": ""}
+# + editable=true slideshow={"slide_type": ""}
 periods = ["historical", "ssp126", "ssp370", "ssp585"]
+# -
 
-# %%
 Rspecific = 287.052874
 
-# %% editable=true slideshow={"slide_type": ""}
+# + editable=true slideshow={"slide_type": ""}
 # Sense check!
 math.degrees(math.asin(math.sin(math.radians(10))))
 
 math.degrees(scipy.constants.pi)
 
-# %%
+# +
 with open(
     os.path.expanduser(
         "~/jupyter/runways_ECAC-JW-adding-LICG.csv",
@@ -219,8 +215,8 @@ for _airport_code in airport_codes:
 
 print("This should be 30 ---> " + str(len(runway_lengths)))
 # print('The length of the runway at '+airport_code+' is '+str(runway_lengths['LGHI'])+'m')
+# -
 
-# %%
 def air_absorption_coefficient(
     frequency, temperature_K, pressure_Pa, relative_humidity_percent
 ):
@@ -263,7 +259,7 @@ def air_absorption_coefficient(
     return alpha
 
 
-# %%
+# +
 my_freq = 50  # https://doi.org/10.2514/6.2024-3398 figure 9
 
 fig, ax = plt.subplots(ncols=1, nrows=1, figsize=(5, 4))
@@ -310,7 +306,7 @@ for idx, j in enumerate(
 
 plt.show();
 
-# %% editable=true slideshow={"slide_type": ""}
+# + editable=true slideshow={"slide_type": ""}
 n = 2  # Exponent of noise fall off, 1/r^n
 
 
@@ -328,11 +324,11 @@ def noise_level_at_distance(source_level, distance, my_temperature_in_K):
     return (
         source_level - 10 * n * np.log10(distance) - absorption_coefficient * distance
     )
+# -
 
-# %% [markdown]
 # # Following cell gives 'parameters' used by Papermill for batch processing.
 
-# %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
+# + editable=true slideshow={"slide_type": ""} tags=["parameters"]
 # Parameter cell for papermill
 
 
@@ -342,9 +338,7 @@ batch = False
 _2030 = False
 measure = "mean"
 
-# %%
-
-# %%
+# +
 fig, axes = plt.subplots(
     nrows=1,
     ncols=2,
@@ -580,12 +574,12 @@ axes.flatten()[1].set_title("(b)")
 
 
 plt.show();
+# -
 
-# %%
 latitude = airport_coordinates[airport_code][0]
 longitude = airport_coordinates[airport_code][1]
 
-# %%
+# +
 # Define the number of samples and dimensions
 n_samples = 20
 n_dimensions = 2
@@ -738,7 +732,7 @@ axes[0].set_ylim(bottom=lhc_I0s[0])
 
 plt.show();
 
-# %%
+# +
 # new values
 
 optimum_climb_angle = scaled_latin_hypercube[np.argmin(_y)][0]
@@ -746,7 +740,7 @@ optimum_climb_angle
 optimum_source_level = scaled_latin_hypercube[np.argmin(_y)][1]
 optimum_source_level
 
-# %% editable=true slideshow={"slide_type": ""}
+# + editable=true slideshow={"slide_type": ""}
 areas = {}
 
 runway_length = runway_lengths[airport_code]
@@ -1228,14 +1222,14 @@ it only depends on the smallest one!
             pickle.dump(contours_dict, file)
 
     plt.show()
+# -
 
-# %%
 (obj["mx2t24_" + "historical"]).mean() - scipy.constants.zero_Celsius
 (obj["sp_" + "historical"]).mean()
 
-# %%
 
-# %%
+
+# +
 df = pd.DataFrame(list(climb_angle_adjustments.items()), columns=["Key", "Value"])
 
 if not os.path.exists("climb_angle_adjustments"):
@@ -1253,14 +1247,14 @@ df.to_csv(
     index=False,
     header=True,
 )
+# -
 
-# %%
 # !ls
 
-# %% editable=true slideshow={"slide_type": ""}
+# + editable=true slideshow={"slide_type": ""}
 areas
 
-# %%
+# +
 areas
 
 for period in periods:
@@ -1270,7 +1264,7 @@ for period in periods:
 
 areas
 
-# %%
+# +
 # Convert dictionary to DataFrame
 df = pd.DataFrame(list(areas.items()), columns=["Key", "Value"])
 
@@ -1290,25 +1284,21 @@ df.to_csv(
     index=False,
     header=True,
 )
+# -
 
-# %% [markdown]
 # # Quit here if running batches on a remote server using Papermill.
 
-# %%
 if batch:
     print("Running batch jobs with papermill, exiting here.")
     sys.exit(0)
 
-# %%
 
-# %%
-show_illustration_of_parameter_changes = True
 
-# %%
 
-# %%
 
-# %%
+
+
+# +
 fig, axes = plt.subplots(nrows=5, ncols=6, sharey=1)
 fig.set_figwidth(10)
 fig.set_figheight(8)
@@ -1423,8 +1413,8 @@ for idx, _airport_code in enumerate(airport_codes):
     )
 
 plt.show();
+# -
 
-# %%
 airport_to_country = {
     "EBBR": "bel",
     "EDDF": "deu",
@@ -1458,20 +1448,17 @@ airport_to_country = {
     "LTFM": "tur",
 }
 
-# %%
 # Check ---> EGLC is London City so should be 'gbr'.
 airport_to_country["EGLC"]
 
-# %%
 for _airport_code in airport_codes:
     file_name = str(airport_to_country[_airport_code]) + "*.tif"
 
-# %%
 population_densities = {}
 
-# %%
 
-# %%
+
+# +
 # Define the discrete color levels
 # levels = [0, 250, 500, 750, 1000]
 levels = np.linspace(0, 500, 11)
@@ -1587,22 +1574,20 @@ for idy, _file in enumerate(range(len(files))):
 #     plt.suptitle(str(periods[idy]))
 
 # plt.show();
+# -
 
-# %%
 
-# %%
+
 ds = xr.open_dataarray(
     "../noise/worldpop_future/2635_worldpop_SSP1-RCP2.6_2014-01-01_2014-12-31_1year_mean.nc"
 )
 ds.plot(vmax=1e3)
 
-# %% [markdown]
 # # Future population
 
-# %%
 # %matplotlib inline
 
-# %%
+# +
 fig, axes = plt.subplots(
     nrows=5,
     ncols=6,
@@ -1662,7 +1647,7 @@ for idx, _airport_code in tqdm(enumerate(airport_codes)):
 
 plt.show();
 
-# %%
+# +
 floats_only_dict = {}
 
 # Directory containing the CSV files
@@ -1738,7 +1723,7 @@ with open(
         floats_only_dict, f
     )  # <--- what this is saving is the total population (absolute value)
 
-# %%
+# +
 my_freqs = [
     50,
     1000,
@@ -1841,11 +1826,11 @@ plt.suptitle(
 )
 
 plt.show();
+# -
 
-# %% [markdown]
 # # next cell is just playing with the previous one but for abs values
 
-# %%
+# +
 my_freqs = [
     50,
     # 150,
@@ -1943,19 +1928,18 @@ plt.suptitle(
 )
 
 plt.show();
+# -
 
-# %%
 my_freq
 
-# %%
 
-# %%
 
-# %%
 
-# %%
 
-# %%
+
+
+
+
 models = [
     "ACCESS-ESM1-5",
     "CMCC-ESM2",
@@ -1969,10 +1953,8 @@ models = [
     "UKESM1-0-LL",
 ]
 
-# %% [markdown]
 # # LESO angle adjustments
 
-# %%
 obj = pd.read_pickle(
     "~/jupyter/"
     + "pickles-"
@@ -1986,7 +1968,7 @@ obj = pd.read_pickle(
     + ".pkl"
 )
 
-# %%
+# +
 # fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,5))
 
 period = "ssp585"
@@ -2131,5 +2113,6 @@ cbar.ax.xaxis.set_major_formatter(FormatStrFormatter("%g"))
 
 
 plt.show();
+# -
 
-# %%
+

@@ -18,7 +18,6 @@ import csv
 from scipy.stats import qmc
 import math
 import os
-import pdb
 
 from matplotlib.ticker import FormatStrFormatter
 import pickle
@@ -38,7 +37,7 @@ import pandas as pd
 import scipy
 import seaborn as sns
 import xarray as xr
-from IPython.core.interactiveshell import InteractiveShell
+
 from matplotlib.ticker import (
     FormatStrFormatter,
 )
@@ -61,7 +60,7 @@ from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 import matplotlib.pyplot as plt
 import numpy as np
 
-InteractiveShell.ast_node_interactivity = "all"
+
 from matplotlib.colors import TwoSlopeNorm
 import scipy
 import seaborn as sns
@@ -69,8 +68,8 @@ from pyproj import Geod
 from scipy.ndimage import gaussian_filter1d
 from shapely.geometry import Polygon
 from tqdm import tqdm
-# -
 
+# -
 
 
 airport_coordinates = {
@@ -222,6 +221,7 @@ print("This should be 30 ---> " + str(len(runway_lengths)))
 # print('The length of the runway at '+airport_code+' is '+str(runway_lengths['LGHI'])+'m')
 # -
 
+
 def air_absorption_coefficient(
     frequency, temperature_K, pressure_Pa, relative_humidity_percent
 ):
@@ -309,7 +309,7 @@ for idx, j in enumerate(
     ax.set_ylabel(r"$\mathrm{\alpha\ [dB/m]}$")
 
 
-plt.show();
+plt.show()
 
 # + editable=true slideshow={"slide_type": ""}
 n = 2  # Exponent of noise fall off, 1/r^n
@@ -329,6 +329,8 @@ def noise_level_at_distance(source_level, distance, my_temperature_in_K):
     return (
         source_level - 10 * n * np.log10(distance) - absorption_coefficient * distance
     )
+
+
 # -
 
 # # Following cell gives 'parameters' used by Papermill for batch processing.
@@ -578,7 +580,7 @@ axes.flatten()[0].set_title("(a)")
 axes.flatten()[1].set_title("(b)")
 
 
-plt.show();
+plt.show()
 # -
 
 latitude = airport_coordinates[airport_code][0]
@@ -735,7 +737,7 @@ axes[0].set_ylim(bottom=lhc_I0s[0])
 [ax.set_xlim(7.2, 7.7) for ax in [axes[0]]]
 
 
-plt.show();
+plt.show()
 
 # +
 # new values
@@ -1233,7 +1235,6 @@ it only depends on the smallest one!
 (obj["sp_" + "historical"]).mean()
 
 
-
 # +
 df = pd.DataFrame(list(climb_angle_adjustments.items()), columns=["Key", "Value"])
 
@@ -1252,9 +1253,6 @@ df.to_csv(
     index=False,
     header=True,
 )
-# -
-
-# !ls
 
 # + editable=true slideshow={"slide_type": ""}
 areas
@@ -1296,11 +1294,6 @@ df.to_csv(
 if batch:
     print("Running batch jobs with papermill, exiting here.")
     sys.exit(0)
-
-
-
-
-
 
 
 # +
@@ -1417,7 +1410,7 @@ for idx, _airport_code in enumerate(airport_codes):
         "(" + list(string.ascii_lowercase + string.ascii_uppercase)[idx] + ")"
     )
 
-plt.show();
+plt.show()
 # -
 
 airport_to_country = {
@@ -1460,7 +1453,6 @@ for _airport_code in airport_codes:
     file_name = str(airport_to_country[_airport_code]) + "*.tif"
 
 population_densities = {}
-
 
 
 # +
@@ -1582,7 +1574,6 @@ for idy, _file in enumerate(range(len(files))):
 # -
 
 
-
 ds = xr.open_dataarray(
     "../noise/worldpop_future/2635_worldpop_SSP1-RCP2.6_2014-01-01_2014-12-31_1year_mean.nc"
 )
@@ -1650,7 +1641,7 @@ for idx, _airport_code in tqdm(enumerate(airport_codes)):
 
 # plt.suptitle("Base 10 logarithm of population density per km squared  ")
 
-plt.show();
+plt.show()
 
 # +
 floats_only_dict = {}
@@ -1830,7 +1821,7 @@ plt.suptitle(
     + "the 3 bar plots are for SSP1, 3 and 5 (blue, black, red)"
 )
 
-plt.show();
+plt.show()
 # -
 
 # # next cell is just playing with the previous one but for abs values
@@ -1932,17 +1923,10 @@ plt.suptitle(
     + "the 3 bar plots are for SSP1, 3 and 5 (blue, black, red)"
 )
 
-plt.show();
+plt.show()
 # -
 
 my_freq
-
-
-
-
-
-
-
 
 
 models = [
@@ -2116,8 +2100,5 @@ cbar.ax.invert_xaxis()
 
 cbar.ax.xaxis.set_major_formatter(FormatStrFormatter("%g"))
 
-
-plt.show();
+plt.show()
 # -
-
-

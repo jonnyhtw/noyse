@@ -1,5 +1,4 @@
-
-name: Black formatting check
+name: Black formatting & Python syntax check
 
 on:
   pull_request:
@@ -7,21 +6,28 @@ on:
     branches: [ main, master ]
 
 jobs:
-  black:
+  style-and-syntax:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.11"  # or your preferred version
+                   python-version: "3.11"  # pick your project's version
 
       - name: Install Black
         run: |
           python -m pip install --upgrade pip
-                   pip install black
+          pip install black
 
-      - name: Check Black formatting
+      - name: Check Black formatting (no changes allowed)
+        run: black --check --diff .
+
+      - name: Syntax check (compile all .py files)
         run: |
+          python -m compileall -q .
+
 

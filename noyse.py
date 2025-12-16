@@ -18,6 +18,7 @@ import csv
 from scipy.stats import qmc
 import math
 import os
+
 from matplotlib.ticker import FormatStrFormatter
 import pickle
 import matplotlib.ticker as ticker
@@ -36,7 +37,7 @@ import pandas as pd
 import scipy
 import seaborn as sns
 import xarray as xr
-from IPython.core.interactiveshell import InteractiveShell
+
 from matplotlib.ticker import (
     FormatStrFormatter,
 )
@@ -45,6 +46,7 @@ from tqdm.notebook import tqdm
 import copy
 import csv
 import math
+
 import os
 import string
 import sys
@@ -58,7 +60,7 @@ from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 import matplotlib.pyplot as plt
 import numpy as np
 
-InteractiveShell.ast_node_interactivity = "all"
+
 from matplotlib.colors import TwoSlopeNorm
 import scipy
 import seaborn as sns
@@ -1251,9 +1253,6 @@ df.to_csv(
     index=False,
     header=True,
 )
-# -
-
-# !ls
 
 # + editable=true slideshow={"slide_type": ""}
 areas
@@ -2100,7 +2099,6 @@ cbar.ax.set_xscale("linear")
 cbar.ax.invert_xaxis()
 
 cbar.ax.xaxis.set_major_formatter(FormatStrFormatter("%g"))
-
 
 plt.show()
 # -

@@ -121,8 +121,8 @@ from shapely.geometry import Polygon
 from shapely.ops import unary_union
 from shapely.validation import make_valid
 from tqdm import tqdm
-# -
 
+# -
 
 
 airport_coordinates = {
@@ -274,6 +274,7 @@ print("This should be 30 ---> " + str(len(runway_lengths)))
 # print('The length of the runway at '+airport_code+' is '+str(runway_lengths['LGHI'])+'m')
 # -
 
+
 def air_absorption_coefficient(
     frequency, temperature_K, pressure_Pa, relative_humidity_percent
 ):
@@ -361,7 +362,7 @@ for idx, j in enumerate(
     ax.set_ylabel(r"$\mathrm{\alpha\ [dB/m]}$")
 
 
-plt.show();
+plt.show()
 # -
 
 my_freq
@@ -386,26 +387,6 @@ def noise_level_at_distance(source_level, distance, my_temperature_in_K):
     )
 
 
-# -
-
-scipy.constants.atm
-
-# +
-# n = 2 # Exponent of noise fall off, 1/r^n
-
-# # Function to calculate noise level in decibels at a
-# # given distance from a point source considering air density
-# def noise_level_at_distance(source_level, distance, air_density):
-#     # Assuming the source level is given at 1 meter distance and considering air absorption
-#     '''
-#     Bass, H. E., Sutherland, L. C., Zuckerwar, A. J., Blackstock, D. T., & Hester, D. M. (1995).
-#     Atmospheric absorption of sound: Further developments.
-#     The Journal of the Acoustical Society of America, 97(1), 680-683.
-#     '''
-#     absorption_coefficient = 0.0001 * air_density/1.225  # Simplified absorption coefficient
-#                                                          # based on air density.
-#     return source_level - 10 * n * np.log10(distance) - absorption_coefficient * distance
-
 # + editable=true slideshow={"slide_type": ""} tags=["parameters"]
 """
 parameter cell for papermill
@@ -418,92 +399,6 @@ model = "ACCESS-ESM1-5"
 batch = False
 _2030 = False
 measure = "mean"
-# -
-
-runway_lengths[airport_code]
-
-# # Coord system image for illustration in publication only.
-
-# +
-fig, ax = plt.subplots(nrows=1, ncols=1, subplot_kw={"projection": ccrs.Mercator()})
-
-areas = {}
-
-latitude = airport_coordinates[airport_code][0]
-longitude = airport_coordinates[airport_code][1]
-
-runway_length = runway_lengths[airport_code]
-
-takeoff_distance = 1500  # Not used below! This image is for illustration purposes only.
-
-runway_multiple_frame = 5  # Size of half of entire region of interest
-
-# Create a grid of distances in 2D space.
-# This is the *entire* area over which contours will be calculated.
-x = np.linspace(
-    -runway_multiple_frame * runway_length, runway_multiple_frame * runway_length, 20
-)
-y = np.linspace(
-    -runway_multiple_frame * runway_length, runway_multiple_frame * runway_length, 20
-)
-X, Y = np.meshgrid(x, y)
-
-m_in_deg_at_equator = 111320  # Metres in one degree of arc at equator!!
-
-# Convert to degrees
-X_deg = X / (m_in_deg_at_equator * np.cos(np.radians(latitude))) + longitude
-Y_deg = Y / m_in_deg_at_equator + latitude
-
-size_of_source_array = 400
-
-source_xs = np.zeros(size_of_source_array)
-source_ys = np.linspace(
-    -takeoff_distance,  # centre of whole grid is where take-off happens
-    y.max(),
-    size_of_source_array,
-)
-
-request = cimgt.OSM()
-
-offsets = [-0.0625, 0.08, -0.025, 0.08]  # longitude min, max, latitude min, max
-
-extent = [
-    longitude + offsets[0],
-    longitude + offsets[1],
-    latitude + offsets[2],
-    latitude + offsets[3],
-]
-
-ax.scatter(X_deg, Y_deg, transform=ccrs.PlateCarree(), marker="o", color="k", s=1)
-
-level = 12  # Level of detail in background map
-
-ax.add_image(
-    request,
-    level,
-)
-
-ax.plot(
-    longitude,
-    latitude,
-    marker="o",
-    color="red",
-    markersize=10,
-    alpha=0.5,
-    transform=ccrs.PlateCarree(),
-)
-
-
-ax.text(0.5, -0.1, r"$x$", transform=ax.transAxes, ha="center", fontsize=20)
-ax.text(-0.1, 0.5, r"$y$", transform=ax.transAxes, va="center", fontsize=20)
-
-
-plt.show();
-# -
-
-# # ellipse
-
-
 
 # +
 fig, axes = plt.subplots(
@@ -740,13 +635,11 @@ axes.flatten()[0].set_title("(a)")
 axes.flatten()[1].set_title("(b)")
 
 
-plt.show();
+plt.show()
 # -
 
 latitude = airport_coordinates[airport_code][0]
 longitude = airport_coordinates[airport_code][1]
-
-latitude
 
 # +
 # Define the number of samples and dimensions
@@ -902,15 +795,7 @@ axes[0].set_ylim(bottom=lhc_I0s[0])
 [ax.set_xlim(7.2, 7.7) for ax in [axes[0]]]
 
 
-plt.show();
-# -
-
-_y.min()
-
-scaled_latin_hypercube
-
-scaled_latin_hypercube[np.argmin(_y)][0]
-scaled_latin_hypercube[np.argmin(_y)][1]
+plt.show()
 
 # +
 # new values
@@ -919,15 +804,6 @@ optimum_climb_angle = scaled_latin_hypercube[np.argmin(_y)][0]
 optimum_climb_angle
 optimum_source_level = scaled_latin_hypercube[np.argmin(_y)][1]
 optimum_source_level
-
-# +
-# # preprint values
-
-# optimum_climb_angle = 7.2814601
-# optimum_source_level = 99.014647
-# -
-
-my_freq
 
 # + editable=true slideshow={"slide_type": ""}
 areas = {}
@@ -1411,8 +1287,6 @@ it only depends on the smallest one!
             pickle.dump(contours_dict, file)
 
     plt.show()
-
-fig.savefig("./contours.png", dpi=400, bbox_inches="tight")
 # -
 
 (obj["mx2t24_" + "historical"]).mean() - scipy.constants.zero_Celsius
@@ -1427,172 +1301,7 @@ for i in [6, 7, 8]:
 my_freq
 
 
-
-
-
-# +
-contour = css["historical"]
-
-# Step 2: Extract the contour data
-contour_data = []
-for collection in contour.collections:
-    for path in collection.get_paths():
-        vertices = path.vertices
-        contour_data.append(vertices)
-
-# Step 3: Convert the data to GeoJSON format
-features = []
-for vertices in contour_data:
-    coordinates = vertices.tolist()
-    feature = geojson.Feature(geometry=geojson.LineString(coordinates))
-    features.append(feature)
-
-geojson_data = geojson.FeatureCollection(features)
-
-# Step 4: Save the GeoJSON file
-with open(
-    airport_code + "_" + str(contour_for_area_calculation) + "dB_contour.geojson", "w"
-) as f:
-    geojson.dump(geojson_data, f)
-
-print("GeoJSON file saved successfully!")
-# -
-
-
-
-if not batch:
-    with open(
-        "/home/sa931773/IMPACT-model/impact-model-studies/LESO/"
-        + "CalculatedGrids/Ldens_LESO_LESO_EAS.grd",
-        "r",
-    ) as file:
-        lines = file.readlines()[4:-3]
-
-    lines[0]
-
-    def separate_into_arrays(lst):
-        x = []
-        y = []
-        z = []
-
-        for item in lst:
-            # Remove newline character
-            item = item.strip()
-            # Split the string into coordinates and value
-            coordinates, value = item.split(") ")
-            coordinates += ")"
-            # Convert coordinates and value to appropriate types
-            coordinates = eval(coordinates)
-            value = float(value)
-            # Append the values to respective arrays
-            x.append(coordinates[0])
-            y.append(coordinates[1])
-            z.append(value)
-
-        # Convert lists to numpy arrays
-        x = np.array(x)
-        y = np.array(y)
-        z = np.array(z)
-
-        return x, y, z
-
-    # Separate the sample list into x, y, and z arrays
-    x_array, y_array, z_array = separate_into_arrays(lines)
-
-    print("x array:", x_array)
-    print("y array:", y_array)
-    print("z array:", z_array)
-
-    fig, ax = plt.subplots(nrows=1, ncols=1, subplot_kw={"projection": ccrs.Mercator()})
-
-    fig.set_figwidth(10)
-
-    plotthis = [
-        x_array * 0.3048 / (m_in_deg_at_equator * np.cos(np.radians(latitude))),
-        y_array * 0.3048 / m_in_deg_at_equator,
-        z_array,
-    ]
-
-    ax.tricontour(
-        plotthis[0] + -1.79732 - 0.005,
-        plotthis[1] + 43.35053 - 0.005,
-        plotthis[2],
-        levels=[50],
-        transform=ccrs.PlateCarree(),
-        # colors = ['b','y','r'],
-    )
-
-    # Add gridlines with labels
-    gl = ax.gridlines(draw_labels=True)
-    gl.top_labels = False
-    gl.right_labels = False
-    gl.xlabel_style = {"size": 10, "color": "gray"}
-    gl.ylabel_style = {"size": 10, "color": "gray"}
-
-    ax.set_extent([lon_min, lon_max, lat_min, lat_max], crs=ccrs.PlateCarree())
-
-    ax.add_image(request, level, interpolation="spline36")
-
-
-
 # # Figs for paper etc
-
-# +
-fig, ax = plt.subplots(
-    nrows=1,
-    ncols=1,
-)
-
-fig.set_figwidth(3)
-fig.set_figheight(3)
-
-_N = 100
-
-
-cs = ax.contour(
-    X / 1e3,
-    Y / 1e3,
-    noise_levels_array[0],
-    levels=[
-        30,
-        35,
-        40,
-        45,
-        50,
-        55,
-        60,
-    ],
-    # colors = ['r','y','b']
-)
-
-
-ax.grid()
-ax.set_xlabel("x [km]")
-ax.set_ylabel("y [km]", rotation=0, labelpad=20)
-
-ax.set_xlim(-1, 1)
-ax.set_ylim(-2.5, -0.5)
-
-ax.set_facecolor("whitesmoke")
-
-ax.xaxis.set_major_formatter(FormatStrFormatter("%g"))
-ax.yaxis.set_major_formatter(FormatStrFormatter("%g"))
-plt.clabel(
-    cs,
-)
-
-
-ax.scatter(
-    [-distance_between_sources / 2 / 1e3, distance_between_sources / 2 / 1e3],
-    [-runway_length / 1e3, -runway_length / 1e3],
-)
-
-
-plt.show()
-# -
-
-
-
 
 
 # +
@@ -1607,7 +1316,6 @@ ax.plot(source_ys, source_zs)
 ax.scatter(0, 0, facecolors="none", edgecolors="k")
 plt.show()
 # -
-
 
 
 # +
@@ -1631,107 +1339,6 @@ df.to_csv(
 # -
 
 
-
-# +
-fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2)
-
-fig.set_figwidth(10)
-
-theta = 90
-angles = np.linspace(-theta, theta, 200)
-weights = np.exp(-((angles / 35) ** 2))
-ax1.plot(angles, weights, "-o", fillstyle="none", markersize=5, label=r"$\sigma^2=35$")
-ax1.legend()
-ax1.set_ylim(top=1.1)
-ax1.set_xlim(right=110)
-ax1.set_xlabel(r"$\gamma$" + " [degrees]")
-ax1.set_ylabel(r"$p(\gamma)$", rotation=0)
-
-x1, x2, y1, y2 = -11, 11, 0.95, 1.02  # subregion of the original image
-axins = ax1.inset_axes(
-    [0.625, 0.7, 0.25, 0.2], xlim=(x1, x2), ylim=(y1, y2), transform=ax1.transAxes
-)
-axins.plot(angles, weights, "-ro", fillstyle="none", markersize=5)
-axins.yaxis.tick_right()
-
-ax1.indicate_inset_zoom(axins, edgecolor="black")
-ax1.set_facecolor("whitesmoke")
-axins.grid()
-axins.set_facecolor("powderblue")
-
-ax1.set_title("(a) " + r"$p(\gamma)=\exp(-\gamma^2/2\sigma^2)$")
-
-colors = ["k", "r", "b", "g"]
-linestyles = ["-", "--", "-.", "-"]
-for ics, cs in enumerate([10, 15, 20, 35]):
-    weights = np.exp(-((angles / cs) ** 2))
-    ax2.plot(
-        angles,
-        weights,
-        "-",
-        fillstyle="none",
-        markersize=5,
-        label=r"$2\sigma^2=$" + str(cs),
-        color=colors[ics],
-        linestyle=linestyles[ics],
-    )
-
-ax2.legend()
-ax2.set_ylim(top=1.1)
-ax2.set_xlim(-25, 25)
-ax2.set_xlabel(r"$\gamma$" + " [degrees]")
-ax2.set_ylabel(r"$p(\gamma)$", rotation=0)
-ax2.set_facecolor("whitesmoke")
-ax2.grid()
-ax2.set_title("(b)")
-
-
-plt.show();
-
-# +
-fig, ax1 = plt.subplots(nrows=1, ncols=1, subplot_kw={"projection": ccrs.Mercator()})
-
-extent = [
-    longitude + offsets[0],
-    longitude + offsets[1],
-    latitude + offsets[2],
-    latitude + offsets[3],
-]
-
-ax1.set_extent(extent, crs=ccrs.PlateCarree())
-
-level = 12  # Level of detail in background map
-
-ax1.add_image(
-    request,
-    level,
-    #               #  interpolation='spline36', regrid_shape=2000
-)
-
-cs = ax1.contour(
-    scipy.ndimage.rotate(X_deg, -runway_bearing, reshape=False),
-    scipy.ndimage.rotate(Y_deg, -runway_bearing, reshape=False),
-    J_maxs["historical"],
-    levels=[50],
-    colors="k",  # ['b','y','r'],
-    alpha=0.25,
-    linewidths=5,
-    transform=ccrs.PlateCarree(),
-)
-
-cs = ax1.contour(
-    scipy.ndimage.rotate(X_deg, -runway_bearing, reshape=False),
-    scipy.ndimage.rotate(Y_deg, -runway_bearing, reshape=False),
-    J_maxs["ssp585"],
-    levels=[50],
-    colors="r",
-    alpha=0.5,
-    linestyles="--",
-    transform=ccrs.PlateCarree(),
-)
-
-plt.show()
-
 # + editable=true slideshow={"slide_type": ""}
 areas
 
@@ -1744,21 +1351,6 @@ for period in periods:
     )
 
 areas
-
-# +
-fig, ax = plt.subplots(nrows=1, ncols=1)
-fig.set_figheight(2)
-fig.set_figwidth(3)
-
-plt.plot(
-    {
-        k: v for k, v in areas.items() if "cf" in k and not k.startswith("historical")
-    }.values(),
-    "-o",
-    fillstyle="none",
-)
-
-plt.show()
 
 # +
 # Convert dictionary to DataFrame
@@ -1787,205 +1379,6 @@ df.to_csv(
 if batch:
     print("Running with papermill on RACC, exiting here.")
     sys.exit(0)
-
-
-
-
-
-
-
-# +
-fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, layout="constrained")
-fig.set_figheight(3)
-fig.set_figwidth(8)
-
-ax1.plot(
-    source_ys[::2] / runway_length,
-    np.array(source_zs)[::2] / 0.3048,
-    "-",
-    color="grey",
-    fillstyle="none",
-    markersize=10,
-)
-ax1.axvline(1 / 2)
-ax1.axhline(3000)
-ax1.set_ylabel("Height (feet)")
-ax1.set_xlabel("y [runway lengths]")
-ax1.set_facecolor("whitesmoke")
-ax1.set_title("(a)")
-
-ax2.plot(
-    source_zs[::2] / 0.3048,
-    np.array(source_levels)[::2],
-    "-o",
-    color="grey",
-    fillstyle="none",
-    markersize=10,
-)
-ax2.axvline(800)
-ax2.set_xlim([0, 1200])
-ax2.set_ylabel("Sound level (dB)")
-ax2.set_xlabel("Height [feet]")
-ax2.set_facecolor("whitesmoke")
-ax2.set_title("(b)")
-
-plt.show()
-# -
-
-show_illustration_of_parameter_changes = True
-
-# +
-if show_illustration_of_parameter_changes:
-    fig, axes = plt.subplots(
-        nrows=3,
-        ncols=3,
-        subplot_kw={"projection": ccrs.PlateCarree()},
-        layout="constrained",
-    )
-    # fig.set_figwidth(10)
-
-    thetas = np.linspace(-10, 0, 9)
-
-    count = 0
-
-    for j in tqdm(range(len(thetas))):
-        Js = []
-
-        steps = 50
-        angle_range = (-thetas[j], thetas[j])
-        angles = np.linspace(angle_range[0], angle_range[1], steps)
-        _2sigma2 = 45**2
-        weights = np.exp(-(angles**2) / _2sigma2)
-
-        for i in range(steps):
-            Js.append(scipy.ndimage.rotate(J * weights[i], angles[i], reshape=False))
-
-        J_max = np.max(Js, axis=0)
-
-        request = cimgt.OSM()
-
-        offsets_padhra = [
-            -0.0625,
-            0.08,
-            -0.025,
-            0.08,
-        ]  # longitude min, max, latitude min, max
-
-        offsets = copy.deepcopy(offsets_padhra)
-
-        extent = [
-            longitude + offsets[0],
-            longitude + offsets[1],
-            latitude + offsets[2],
-            latitude + offsets[3],
-        ]
-
-        axes.flatten()[count].set_extent(extent, crs=ccrs.PlateCarree())
-
-        level = 12  # Level of detail in background map
-
-        axes.flatten()[count].add_image(request, level)
-        cs = axes.flatten()[count].contour(
-            X_deg,
-            Y_deg,
-            scipy.ndimage.rotate(J_max, runway_bearing, reshape=False),
-            levels=[
-                50,
-                55,
-                60,
-            ],
-            colors=["b", "y", "r"],
-        )
-
-        axes.flatten()[count].set_title(
-            "("
-            + string.ascii_lowercase[j]
-            + ") "
-            + r"$\gamma=$"
-            + str(2 * abs(thetas[j]))
-        )
-
-        count += 1
-
-    # plt.tight_layout()
-
-plt.show()
-
-# +
-if show_illustration_of_parameter_changes:
-    fig, axes = plt.subplots(
-        nrows=3,
-        ncols=3,
-        subplot_kw={"projection": ccrs.PlateCarree()},
-        layout="constrained",
-    )
-    # fig.set_figwidth(10)
-
-    _2sigma2s = np.linspace(45, 1, 9) ** 2
-
-    count = 0
-
-    for j in tqdm(range(9)):
-        Js = []
-
-        steps = 50
-        angle_range = (-10, 10)
-
-        angles = np.linspace(angle_range[0], angle_range[1], steps)
-
-        weights = np.exp(-(angles**2) / _2sigma2s[j])
-
-        for i in range(steps):
-            Js.append(scipy.ndimage.rotate(J * weights[i], angles[i], reshape=False))
-
-        J_max = np.max(Js, axis=0)
-
-        request = cimgt.OSM()
-
-        offsets_padhra = [
-            -0.0625,
-            0.08,
-            -0.025,
-            0.08,
-        ]  # longitude min, max, latitude min, max
-
-        offsets = copy.deepcopy(offsets_padhra)
-
-        extent = [
-            longitude + offsets[0],
-            longitude + offsets[1],
-            latitude + offsets[2],
-            latitude + offsets[3],
-        ]
-
-        axes.flatten()[count].set_extent(extent, crs=ccrs.PlateCarree())
-
-        level = 12  # Level of detail in background map
-
-        axes.flatten()[count].add_image(request, level)
-        cs = axes.flatten()[count].contour(
-            X_deg,
-            Y_deg,
-            scipy.ndimage.rotate(J_max, runway_bearing, reshape=False),
-            levels=[
-                50,
-                55,
-                60,
-            ],
-            colors=["b", "y", "r"],
-        )
-
-        axes.flatten()[count].set_title(
-            "(" + string.ascii_lowercase[j] + ") " + r"$2\sigma^2=$" + str(_2sigma2s[j])
-        )
-
-        count += 1
-
-plt.show()
-# -
-
-
-
 
 
 # +
@@ -2102,7 +1495,7 @@ for idx, _airport_code in enumerate(airport_codes):
         "(" + list(string.ascii_lowercase + string.ascii_uppercase)[idx] + ")"
     )
 
-plt.show();
+plt.show()
 # -
 
 my_freq
@@ -2143,109 +1536,7 @@ airport_to_country = {
 # Check ---> EGLC is London City so should be 'gbr'.
 airport_to_country["EGLC"]
 
-for _airport_code in airport_codes:
-    file_name = str(airport_to_country[_airport_code]) + "*.tif"
-    # os.system('ls '+file_name)
-
 population_densities = {}
-
-# +
-fig, axes = plt.subplots(
-    nrows=5, ncols=6, subplot_kw={"projection": ccrs.PlateCarree()}
-)
-fig.set_figheight(10)
-fig.set_figwidth(10)
-
-
-# Define the discrete color levels
-levels = [0, 250, 500, 750, 1000]
-# levels = np.linspace(0,2000,11)
-
-# Use the viridis colormap with 5 discrete colors
-cmap = plt.get_cmap("viridis", len(levels) - 1)
-
-
-for idx, _airport_code in tqdm(enumerate(airport_codes)):
-    _country = airport_to_country[_airport_code]
-
-    file_path = "./" + _country + "_pd_2014_1km_UNadj.tif"
-    src = rasterio.open(file_path)
-    # Read the dataset's metadata
-    transform = src.transform
-    metadata = src.meta
-    # Read the dataset's data
-    data = src.read(1)  # Read the first band
-    crs = src.crs
-    width = src.width
-    height = src.height
-
-    data = np.ma.masked_equal(data, -99999.0)
-
-    extent = [
-        airport_coordinates[_airport_code][1] - 0.1,
-        airport_coordinates[_airport_code][1] + 0.1,
-        airport_coordinates[_airport_code][0] - 0.1,
-        airport_coordinates[_airport_code][0] + 0.1,
-    ]
-
-    lon_array = np.linspace(transform[2], transform[2] + transform[0] * width, width)
-    lat_array = np.linspace(transform[5], transform[5] + transform[4] * height, height)
-    mesh = axes.flatten()[idx].pcolormesh(
-        lon_array,
-        lat_array,
-        data,
-        # vmax = 1000,
-        cmap=cmap,
-        norm=mcolors.BoundaryNorm(levels, cmap.N),
-        # levels = 5,
-        transform=ccrs.PlateCarree(),
-        alpha=0.75,
-        # cmap='coolwarm'
-    )
-
-    axes.flatten()[idx].set_extent(extent, crs=ccrs.PlateCarree())
-
-    axes.flatten()[idx].add_feature(cfeature.LAND)
-    axes.flatten()[idx].add_feature(cfeature.OCEAN)
-    axes.flatten()[idx].add_feature(cfeature.BORDERS)
-
-    argmin_lat = np.argmin(abs(lat_array - airport_coordinates[_airport_code][0]))
-    argmin_lon = np.argmin(abs(lon_array - airport_coordinates[_airport_code][1]))
-
-    historical_population_density = data[
-        argmin_lat - 3 : argmin_lat + 4, argmin_lon - 3 : argmin_lon + 4
-    ].mean()
-
-    # Define the range of indices for the box
-    x_start, x_end = lon_array[argmin_lon - 3], lon_array[argmin_lon + 3]
-    y_start, y_end = lat_array[argmin_lat - 3], lat_array[argmin_lat + 3]
-
-    # Draw a box around the specified range of indices
-    axes.flatten()[idx].plot(
-        [x_start, x_end, x_end, x_start, x_start],
-        [y_start, y_start, y_end, y_end, y_start],
-        linestyle="--",
-        color="w",
-    )
-
-    axes.flatten()[idx].set_title(
-        "("
-        + list(string.ascii_lowercase + string.ascii_uppercase)[idx]
-        + ") "
-        + _airport_code
-        + ", "
-        + str(int(historical_population_density)),
-        fontsize=10,
-    )
-
-    population_densities[_airport_code] = historical_population_density
-
-cbar = fig.colorbar(mesh, ax=axes, orientation="horizontal", fraction=0.05, pad=0.01)
-cbar.set_ticks(levels)
-cbar.set_ticklabels(["0", "250", "500", "750", "1000"])
-
-plt.show();
-# -
 
 # # Future population
 
@@ -2286,17 +1577,17 @@ files = [
 pop_density = {}
 
 # Use the viridis colormap with 5 discrete colors
-cmap = plt.get_cmap("viridis", len(levels) - 1)
+# cmap = plt.get_cmap("viridis", len(levels) - 1)
 
 
 for idy, _file in enumerate(range(len(files))):
 
-    fig, axes = plt.subplots(
-        nrows=5, ncols=6, subplot_kw={"projection": ccrs.PlateCarree()}
-    )
-    fig.set_figheight(10)
-    fig.set_figwidth(10)
-    axes = axes.flatten()
+    # fig, axes = plt.subplots(
+    #     nrows=5, ncols=6, subplot_kw={"projection": ccrs.PlateCarree()}
+    # )
+    # fig.set_figheight(10)
+    # fig.set_figwidth(10)
+    # axes = axes.flatten()
 
     for idx, _airport_code in tqdm(enumerate(airport_codes)):
 
@@ -2316,19 +1607,19 @@ for idy, _file in enumerate(range(len(files))):
 
         fpop = fpop.sel(lat=slice(lat_min, lat_max), lon=slice(lon_min, lon_max))
 
-        mesh = axes[idx].pcolormesh(
-            fpop["lon"].squeeze(),
-            fpop["lat"].squeeze(),
-            fpop["pop_count"].squeeze(),
-            cmap=cmap,
-            norm=mcolors.BoundaryNorm(levels, cmap.N),
-            transform=ccrs.PlateCarree(),
-            alpha=0.75,
-        )
+        # mesh = axes[idx].pcolormesh(
+        #     fpop["lon"].squeeze(),
+        #     fpop["lat"].squeeze(),
+        #     fpop["pop_count"].squeeze(),
+        #     cmap=cmap,
+        #     norm=mcolors.BoundaryNorm(levels, cmap.N),
+        #     transform=ccrs.PlateCarree(),
+        #     alpha=0.75,
+        # )
 
-        axes.flatten()[idx].add_feature(cfeature.LAND)
-        axes.flatten()[idx].add_feature(cfeature.OCEAN)
-        axes.flatten()[idx].add_feature(cfeature.BORDERS)
+        # axes.flatten()[idx].add_feature(cfeature.LAND)
+        # axes.flatten()[idx].add_feature(cfeature.OCEAN)
+        # axes.flatten()[idx].add_feature(cfeature.BORDERS)
 
         area_of_extracted_region = (
             np.cos(np.radians(airport_coordinates[_airport_code][0]))
@@ -2346,85 +1637,27 @@ for idy, _file in enumerate(range(len(files))):
             fpop["pop_count"].squeeze().sum().item() / area_of_extracted_region
         )
 
-        axes.flatten()[idx].set_title(
-            "("
-            + list(string.ascii_lowercase + string.ascii_uppercase)[idx]
-            + ") "
-            + _airport_code
-            + ", "
-            # + str(int(round(pop_density, -3))),
-            f"{int(round(pop_density[_airport_code + '_'+periods[idy]], -2)):,}",
-            fontsize=7.5,
-        )
-
-    cbar = fig.colorbar(
-        mesh, ax=axes, orientation="horizontal", fraction=0.05, pad=0.1, extend="max"
-    )
-    cbar.set_ticks(levels)
-
-    plt.suptitle(str(periods[idy]))
-
-plt.show();
-# -
-
-area_of_extracted_region  # km2
-
-
-
-pop_density.keys()
-
-# +
-# for period in periods[1:]:
-
-#     for idx, _airport_code in enumerate(airport_codes):
-
-#         pop_density[_airport_code + "_" + period] = (
-#             pop_density[_airport_code + "_" + period]
-#             # - pop_density[_airport_code + "_historical"]
+#         axes.flatten()[idx].set_title(
+#             "("
+#             + list(string.ascii_lowercase + string.ascii_uppercase)[idx]
+#             + ") "
+#             + _airport_code
+#             + ", "
+#             # + str(int(round(pop_density, -3))),
+#             f"{int(round(pop_density[_airport_code + '_'+periods[idy]], -2)):,}",
+#             fontsize=7.5,
 #         )
 
-# +
-# # Filter the dictionary
-# pop_density_filtered = {
-#     key: value for key, value in pop_density.items() if "ssp" in key and "historical" in key
-# }
+#     cbar = fig.colorbar(
+#         mesh, ax=axes, orientation="horizontal", fraction=0.05, pad=0.1, extend="max"
+#     )
+#     cbar.set_ticks(levels)
 
-# # Output the filtered dictionary
-# print(pop_density_filtered.keys())
+#     plt.suptitle(str(periods[idy]))
+
+# plt.show();
 # -
 
-pop_density["EBBR_historical"]
-
-# +
-fig, axes = plt.subplots(nrows=4, sharex=True, sharey=True)
-axes = axes.flatten()
-
-colors = color = np.random.rand(30, 3)
-
-fig.set_figheight(5)
-fig.set_figwidth(10)
-
-for i in range(4):
-    axes[i].bar(
-        np.arange(30),
-        {k: v for k, v in pop_density.items() if periods[i] in k}.values(),
-        color=colors,
-    )
-
-    axes[i].grid()
-
-axes[-1].set_xticks(np.arange(30))
-axes[-1].set_xticklabels(
-    airport_codes,
-    rotation=45,
-)
-for tick_label, color in zip(axes[2].get_xticklabels(), colors):
-    tick_label.set_color(color)
-
-
-plt.suptitle("Population DENSITY")
-
-plt.show();
 
 # +
 fig, axes = plt.subplots(
@@ -2482,10 +1715,7 @@ for idx, _airport_code in tqdm(enumerate(airport_codes)):
 
 # plt.suptitle("Base 10 logarithm of population density per km squared  ")
 
-plt.show();
-# -
-
-idx
+plt.show()
 
 # +
 floats_only_dict = {}
@@ -2692,103 +1922,8 @@ plt.suptitle(
     + "the 3 bar plots are for SSP1, 3 and 5 (blue, black, red)"
 )
 
-plt.show();
+plt.show()
 # -
-
-# ###### Number for population change based on Q3 + 1.5 * IQR
-
-# +
-airport_names = []
-airport_latitudes = []
-airport_longitudes = []
-
-airports = airportsdata.load()
-
-for i in range(len(airport_codes)):
-    airport_names.append(airports[airport_codes[i]]["name"])
-    airport_latitudes.append(airports[airport_codes[i]]["lat"])
-    airport_longitudes.append(airports[airport_codes[i]]["lon"])
-# -
-
-# %matplotlib inline
-
-# +
-_airport_code = "EHAM"
-
-bar_arr = []
-
-for _airport_code in airport_codes:
-
-    filtered_dict = {
-        k: v
-        for k, v in population_percentage_numbers.items()
-        if k.startswith(_airport_code) and "ssp585" in k and "50_Hz" in k
-    }
-    # filtered_dict
-
-    # filtered_dict
-
-    # airports[_airport_code]["name"], _airport_code
-
-    bar_arr.append(
-        list(filtered_dict.values())[0]
-        / 100  # percentage to fraction
-        * pop_density[_airport_code + "_historical"]  # in per km2
-        * mean_average_historical_area
-        / 1e6  # m2 to km2
-    )
-
-# +
-fig, ax = plt.subplots(figsize=[8, 3])
-
-sorted_indices = np.argsort(bar_arr)
-
-ax.plot(
-    np.arange(30),
-    np.array(bar_arr)[sorted_indices],
-    "o",
-)
-
-[
-    ax.plot(
-        [np.arange(30)[i], np.arange(30)[i]],
-        [0, np.array(bar_arr)[sorted_indices][i]],
-        "k",
-    )
-    for i in range(30)
-]
-
-ax.set_xticks(np.arange(30))
-ax.set_xticklabels(
-    list(np.array(airport_names)[sorted_indices]), rotation=45, fontsize=10, ha="right"
-)
-ax.grid()
-
-
-plt.show();
-# -
-
-# ###### The numbers in the figure immediately above and below are not precisely equivalent because the q3 and np.max(...) values in the calculations are not exactly equivalent. They aren't contradictory just have slightly different but relatively equivalent definitions. The q3 is a statisticla idealisation, the np.max(...) value is a precise value of a model realisation. 
-
-rounded_values = (np.round(np.array(bar_arr)[sorted_indices][-10:] / 500) * 500).astype(
-    int
-)
-
-# +
-df = pd.DataFrame(
-    {
-        "Airport Name": np.array(airport_names)[sorted_indices][-10:],
-        "Rounded Value": rounded_values,
-    }
-)
-
-# Display the table
-df
-# -
-
-
-
-
 
 # # next cell is just playing with the previous one but for abs values
 
@@ -2899,17 +2034,99 @@ plt.suptitle(
     + "the 3 bar plots are for SSP1, 3 and 5 (blue, black, red)"
 )
 
-plt.show();
+plt.show()
 # -
 
-my_freq
+# ###### Number for population change based on Q3 + 1.5 * IQR
+
+# +
+airport_names = []
+airport_latitudes = []
+airport_longitudes = []
+
+airports = airportsdata.load()
+
+for i in range(len(airport_codes)):
+    airport_names.append(airports[airport_codes[i]]["name"])
+    airport_latitudes.append(airports[airport_codes[i]]["lat"])
+    airport_longitudes.append(airports[airport_codes[i]]["lon"])
+# -
+
+# %matplotlib inline
+
+# +
+_airport_code = "EHAM"
+
+bar_arr = []
+
+for _airport_code in airport_codes:
+
+    filtered_dict = {
+        k: v
+        for k, v in population_percentage_numbers.items()
+        if k.startswith(_airport_code) and "ssp585" in k and "50_Hz" in k
+    }
+    # filtered_dict
+
+    # filtered_dict
+
+    # airports[_airport_code]["name"], _airport_code
+
+    bar_arr.append(
+        list(filtered_dict.values())[0]
+        / 100  # percentage to fraction
+        * pop_density[_airport_code + "_historical"]  # in per km2
+        * mean_average_historical_area
+        / 1e6  # m2 to km2
+    )
+
+# +
+fig, ax = plt.subplots(figsize=[8, 3])
+
+sorted_indices = np.argsort(bar_arr)
+
+ax.plot(
+    np.arange(30),
+    np.array(bar_arr)[sorted_indices],
+    "o",
+)
+
+[
+    ax.plot(
+        [np.arange(30)[i], np.arange(30)[i]],
+        [0, np.array(bar_arr)[sorted_indices][i]],
+        "k",
+    )
+    for i in range(30)
+]
+
+ax.set_xticks(np.arange(30))
+ax.set_xticklabels(
+    list(np.array(airport_names)[sorted_indices]), rotation=45, fontsize=10, ha="right"
+)
+ax.grid()
 
 
+plt.show()
+# -
 
+# ###### The numbers in the figure immediately above and below are not precisely equivalent because the q3 and np.max(...) values in the calculations are not exactly equivalent. They aren't contradictory just have slightly different but relatively equivalent definitions. The q3 is a statisticla idealisation, the np.max(...) value is a precise value of a model realisation.
 
+rounded_values = (np.round(np.array(bar_arr)[sorted_indices][-10:] / 500) * 500).astype(
+    int
+)
 
+# +
+df = pd.DataFrame(
+    {
+        "Airport Name": np.array(airport_names)[sorted_indices][-10:],
+        "Rounded Value": rounded_values,
+    }
+)
 
-
+# Display the table
+df
+# -
 
 
 models = [
@@ -2976,96 +2193,92 @@ for period in periods:
 # # LESO angle adjustments
 
 # +
-fig, axes = plt.subplots(nrows=5, ncols=6, sharey=True)
-fig.set_figwidth(10)
-fig.set_figheight(5)
+# fig, axes = plt.subplots(nrows=5, ncols=6, sharey=True)
+# fig.set_figwidth(10)
+# fig.set_figheight(5)
 
-# Directory containing the CSV files
-directory = "climb_angle_adjustments/"
+# # Directory containing the CSV files
+# directory = "climb_angle_adjustments/"
 
-for idx, _airport_code in enumerate(airport_codes):  # "LGHI", "LICG", "LIRA", "LESO"]):
-    # Initialize an empty list to store dataframes
-    dataframes = []
+# for idx, _airport_code in enumerate(airport_codes):  # "LGHI", "LICG", "LIRA", "LESO"]):
+#     # Initialize an empty list to store dataframes
+#     dataframes = []
 
-    # Iterate over each file in the directory
-    for filename in [
-        filename
-        for filename in os.listdir(directory)
-        if (_airport_code in filename)
-        and ("mean" in filename)
-        and ("_2030" in filename if _2030 else "_2030" not in filename)
-    ]:
-        df = pd.read_csv(os.path.join(directory, filename))
-        dataframes.append(df)
+#     # Iterate over each file in the directory
+#     for filename in [
+#         filename
+#         for filename in os.listdir(directory)
+#         if (_airport_code in filename)
+#         and ("mean" in filename)
+#         and ("_2030" in filename if _2030 else "_2030" not in filename)
+#     ]:
+#         df = pd.read_csv(os.path.join(directory, filename))
+#         dataframes.append(df)
 
-        # print(filename)
+#         # print(filename)
 
-    # Concatenate all dataframes into a single dataframe
-    combined_df = pd.concat(dataframes, ignore_index=True)
+#     # Concatenate all dataframes into a single dataframe
+#     combined_df = pd.concat(dataframes, ignore_index=True)
 
-    df_filtered = combined_df[combined_df["Key"].str.contains("ssp", case=False)]
+#     df_filtered = combined_df[combined_df["Key"].str.contains("ssp", case=False)]
 
-    df_numeric = (
-        (
-            df_filtered.select_dtypes(include="number") * optimum_climb_angle
-            - optimum_climb_angle
-        )
-        / optimum_climb_angle
-        * 100
-    )
+#     df_numeric = (
+#         (
+#             df_filtered.select_dtypes(include="number") * optimum_climb_angle
+#             - optimum_climb_angle
+#         )
+#         / optimum_climb_angle
+#         * 100
+#     )
 
-    # Combine the numeric and non-numeric columns back into a single DataFrame
-    df_filtered.update(df_numeric)
+#     # Combine the numeric and non-numeric columns back into a single DataFrame
+#     df_filtered.update(df_numeric)
 
-    labels = ["Historical", "SSP 1-2.6", "SSP 3-7.0", "SSP 5-8.5"]
-    colors = sns.color_palette("coolwarm", n_colors=4)
+#     labels = ["Historical", "SSP 1-2.6", "SSP 3-7.0", "SSP 5-8.5"]
+#     colors = sns.color_palette("coolwarm", n_colors=4)
 
-    sns.stripplot(
-        data=df_filtered,
-        x="Key",
-        y="Value",
-        hue="Key",
-        size=5,
-        edgecolor="k",
-        linewidth=1,
-        palette=colors[1:],
-        ax=axes.flatten()[idx],
-    )
-    # sns.violinplot(
-    #     data=df_filtered,
-    #     x="Key",
-    #     y="Value",
-    #     hue="Key",
-    #     palette=colors[1:],
-    #     width=1,
-    #     ax=axes.flatten()[idx],
-    # )
+#     sns.stripplot(
+#         data=df_filtered,
+#         x="Key",
+#         y="Value",
+#         hue="Key",
+#         size=5,
+#         edgecolor="k",
+#         linewidth=1,
+#         palette=colors[1:],
+#         ax=axes.flatten()[idx],
+#     )
+#     # sns.violinplot(
+#     #     data=df_filtered,
+#     #     x="Key",
+#     #     y="Value",
+#     #     hue="Key",
+#     #     palette=colors[1:],
+#     #     width=1,
+#     #     ax=axes.flatten()[idx],
+#     # )
 
-    # axes.flatten()[idx].set_xticks(
-    #     ticks=range(len(labels) - 1),
-    #     labels=labels[1:],
-    #     ha="right",
-    #     rotation=45,
-    # )
+#     # axes.flatten()[idx].set_xticks(
+#     #     ticks=range(len(labels) - 1),
+#     #     labels=labels[1:],
+#     #     ha="right",
+#     #     rotation=45,
+#     # )
 
-    axes.flatten()[idx].grid()
-    # axes.flatten()[idx].set_xlabel("")
-    # axes.flatten()[idx].set_ylabel(r"$\phi$", rotation=0, labelpad=10)
-    # axes.flatten()[idx].set_ylim(top=7.7)
-    axes.flatten()[idx].set_title(_airport_code)
+#     axes.flatten()[idx].grid()
+#     # axes.flatten()[idx].set_xlabel("")
+#     # axes.flatten()[idx].set_ylabel(r"$\phi$", rotation=0, labelpad=10)
+#     # axes.flatten()[idx].set_ylim(top=7.7)
+#     axes.flatten()[idx].set_title(_airport_code)
 
-    # def add_degree_symbol(y, pos):
-    #     return f"{y:.2f}°"
+#     # def add_degree_symbol(y, pos):
+#     #     return f"{y:.2f}°"
 
-    # axes.flatten()[idx].yaxis.set_major_formatter(plt.FuncFormatter(add_degree_symbol))
+#     # axes.flatten()[idx].yaxis.set_major_formatter(plt.FuncFormatter(add_degree_symbol))
 
 
-plt.show();
+# plt.show();
 # -
-
-optimum_climb_angle
-
-# # 3D plot of climb angle f(P,T)
 
 obj = pd.read_pickle(
     "~/jupyter/"
@@ -3079,55 +2292,6 @@ obj = pd.read_pickle(
     + "_2030" * (_2030 == False)
     + ".pkl"
 )
-
-obj["t2m_historical"].min() - scipy.constants.zero_Celsius
-obj["t2m_ssp585"].max() - scipy.constants.zero_Celsius
-
-# +
-P = np.linspace(obj["sp_" + "ssp126"].min(), obj["sp_" + "ssp126"].max(), 100)
-T = np.linspace(obj[Tvar + "_ssp126"].min(), obj[Tvar + "_ssp126"].max(), 100)
-
-Pmesh, Tmesh = np.meshgrid(P, T)
-
-_climb_angle = np.degrees(
-    np.arcsin(
-        (Pmesh / (Rspecific * Tmesh))
-        / (
-            obj["sp_" + "historical"].mean()
-            / (Rspecific * obj[Tvar + "_historical"].mean())
-        )
-        * np.sin(np.radians(optimum_climb_angle))
-    )
-)
-
-_climb_angle = (_climb_angle - optimum_climb_angle) / optimum_climb_angle * 100
-
-_climb_angle
-
-fig, ax = plt.subplots(subplot_kw={"projection": "3d"}, layout="tight")
-
-ax.plot_surface(
-    Pmesh / 1e2,
-    Tmesh,
-    _climb_angle,
-    cmap="coolwarm",
-    linewidth=0,
-    antialiased=False,
-    alpha=1,
-    shade=True,
-)
-
-ax.view_init(elev=25, azim=10, roll=0)
-
-ax.set_xlabel("T [C]", rotation=0, labelpad=10)
-ax.invert_xaxis()
-ax.set_ylabel("P [hPa]", rotation=0)
-ax.set_zlabel("Climb angle [" + r"$\degree$" + "]", rotation=0)
-
-plt.show();
-# -
-
-|
 
 # +
 # fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,5))
@@ -3273,82 +2437,5 @@ cbar.ax.invert_xaxis()
 cbar.ax.xaxis.set_major_formatter(FormatStrFormatter("%g"))
 
 
-plt.show();
+plt.show()
 # -
-
-
-
-# +
-# List of diverging palettes
-palettes = [
-    "vlag",
-    "icefire",
-    "coolwarm",
-    "seismic",
-    "RdBu_r",
-    "BrBG",
-    "PiYG",
-    "PRGn",
-    "PuOr",
-    "RdGy",
-    "RdYlBu",
-    "Spectral",
-]
-
-# Number of palettes
-n_palettes = len(palettes)
-
-# Create a figure and a set of subplots
-fig, axes = plt.subplots(n_palettes, 1, figsize=(8, 2 * n_palettes))
-
-# Generate and plot each palette
-for ax, palette in zip(axes, palettes):
-    # Create a color bar for the palette
-    colors = sns.color_palette(palette, as_cmap=True)
-    gradient = np.linspace(0, 1, 256).reshape(1, -1)
-    gradient = np.vstack([gradient, gradient])
-
-    ax.imshow(gradient, aspect="auto", cmap=colors)
-    ax.set_axis_off()
-    ax.set_title(palette, fontsize=12, fontweight="bold")
-
-# Adjust layout
-plt.subplots_adjust(hspace=0.4)
-plt.show();
-# -
-
-# # Look at why e.g. LESO using EC earth areas go down
-
-for model in models:
-
-    obj = pd.read_pickle(
-        "~/jupyter/"
-        + "pickles-"
-        + ac
-        + "/vars_"
-        # + "EC-Earth3"
-        + model
-        + "_"
-        + "LESO"
-        + "_JJA"
-        + ".pkl"
-    )
-
-    print(
-        model
-        + ", "
-        + str(obj["mn2t24_ssp126"].mean() - obj["mn2t24_historical"].mean())
-    )
-
-# # So basically EC-Earth3 has significantly larger temperature jump from historical to SSP1 so the increase in the absorption outweighs the increase in area due to climb angle and the net area decreases.
-#
-
-
-
-
-
-
-
-
-
-

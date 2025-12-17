@@ -231,7 +231,7 @@ periods = ["historical", "ssp126", "ssp370", "ssp585"]
 Rspecific = 287.052874
 
 # + editable=true slideshow={"slide_type": ""}
-# make sure I understand GCSE maths...
+# make sure I understand fundamental maths!
 math.degrees(math.asin(math.sin(math.radians(10))))
 
 math.degrees(scipy.constants.pi)
@@ -364,9 +364,6 @@ for idx, j in enumerate(
 plt.savefig("Figures/Figure2.svg", dpi=300, bbox_inches="tight")
 
 plt.show()
-# -
-
-my_freq
 
 # + editable=true slideshow={"slide_type": ""}
 n = 2  # Exponent of noise fall off, 1/r^n
@@ -1293,19 +1290,6 @@ it only depends on the smallest one!
         plt.savefig("Figures/Figure1.svg", dpi=300, bbox_inches="tight")
 
     plt.show()
-# -
-
-(obj["mx2t24_" + "historical"]).mean() - scipy.constants.zero_Celsius
-(obj["sp_" + "historical"]).mean()
-
-# # Jet noise increase
-
-for i in [6, 7, 8]:
-    deltanj = 10 * i * np.log10((273.15 + 40) / (273.15 + 0))
-    deltanj
-
-my_freq
-
 
 # +
 df = pd.DataFrame(list(climb_angle_adjustments.items()), columns=["Key", "Value"])
@@ -1325,8 +1309,6 @@ df.to_csv(
     index=False,
     header=True,
 )
-# -
-
 
 # +
 areas
@@ -1363,9 +1345,8 @@ df.to_csv(
 # # Quit here if running batches on an external cluster with a scheduler like Slurm.
 
 if batch:
-    print("Running with papermill on RACC, exiting here.")
+    print("Running with papermill on cluster, exiting here.")
     sys.exit(0)
-
 
 # +
 fig, axes = plt.subplots(nrows=5, ncols=6, sharey=1)
@@ -1598,8 +1579,6 @@ for idy, _file in enumerate(range(len(files))):
         pop_density[_airport_code + "_" + periods[idy]] = (
             fpop["pop_count"].squeeze().sum().item() / area_of_extracted_region
         )
-# -
-
 
 # +
 fig, axes = plt.subplots(
@@ -1734,9 +1713,9 @@ with open(
     pickle.dump(
         floats_only_dict, f
     )  # <--- what this is saving is the total population (absolute value)
-# -
 
-{k: v for k, v in pop_density.items() if _airport_code in k}.values()
+# +
+# {k: v for k, v in pop_density.items() if _airport_code in k}.values()
 
 # +
 my_freqs = [
@@ -1996,9 +1975,6 @@ for i in range(len(airport_codes)):
     airport_names.append(airports[airport_codes[i]]["name"])
     airport_latitudes.append(airports[airport_codes[i]]["lat"])
     airport_longitudes.append(airports[airport_codes[i]]["lon"])
-# -
-
-# %matplotlib inline
 
 # +
 _airport_code = "EHAM"
@@ -2025,55 +2001,7 @@ for _airport_code in airport_codes:
         * mean_average_historical_area
         / 1e6  # m2 to km2
     )
-
-# +
-fig, ax = plt.subplots(figsize=[8, 3])
-
-sorted_indices = np.argsort(bar_arr)
-
-ax.plot(
-    np.arange(30),
-    np.array(bar_arr)[sorted_indices],
-    "o",
-)
-
-[
-    ax.plot(
-        [np.arange(30)[i], np.arange(30)[i]],
-        [0, np.array(bar_arr)[sorted_indices][i]],
-        "k",
-    )
-    for i in range(30)
-]
-
-ax.set_xticks(np.arange(30))
-ax.set_xticklabels(
-    list(np.array(airport_names)[sorted_indices]), rotation=45, fontsize=10, ha="right"
-)
-ax.grid()
-
-
-plt.show()
 # -
-
-# ###### The numbers in the figure immediately above and below are not precisely equivalent because the q3 and np.max(...) values in the calculations are not exactly equivalent. They aren't contradictory just have slightly different but relatively equivalent definitions. The q3 is a statisticla idealisation, the np.max(...) value is a precise value of a model realisation.
-
-rounded_values = (np.round(np.array(bar_arr)[sorted_indices][-10:] / 500) * 500).astype(
-    int
-)
-
-# +
-df = pd.DataFrame(
-    {
-        "Airport Name": np.array(airport_names)[sorted_indices][-10:],
-        "Rounded Value": rounded_values,
-    }
-)
-
-# Display the table
-df
-# -
-
 
 models = [
     "ACCESS-ESM1-5",
@@ -2137,94 +2065,6 @@ for period in periods:
     )
 
 # # LESO angle adjustments
-
-# +
-# fig, axes = plt.subplots(nrows=5, ncols=6, sharey=True)
-# fig.set_figwidth(10)
-# fig.set_figheight(5)
-
-# # Directory containing the CSV files
-# directory = "climb_angle_adjustments/"
-
-# for idx, _airport_code in enumerate(airport_codes):  # "LGHI", "LICG", "LIRA", "LESO"]):
-#     # Initialize an empty list to store dataframes
-#     dataframes = []
-
-#     # Iterate over each file in the directory
-#     for filename in [
-#         filename
-#         for filename in os.listdir(directory)
-#         if (_airport_code in filename)
-#         and ("mean" in filename)
-#         and ("_2030" in filename if _2030 else "_2030" not in filename)
-#     ]:
-#         df = pd.read_csv(os.path.join(directory, filename))
-#         dataframes.append(df)
-
-#         # print(filename)
-
-#     # Concatenate all dataframes into a single dataframe
-#     combined_df = pd.concat(dataframes, ignore_index=True)
-
-#     df_filtered = combined_df[combined_df["Key"].str.contains("ssp", case=False)]
-
-#     df_numeric = (
-#         (
-#             df_filtered.select_dtypes(include="number") * optimum_climb_angle
-#             - optimum_climb_angle
-#         )
-#         / optimum_climb_angle
-#         * 100
-#     )
-
-#     # Combine the numeric and non-numeric columns back into a single DataFrame
-#     df_filtered.update(df_numeric)
-
-#     labels = ["Historical", "SSP 1-2.6", "SSP 3-7.0", "SSP 5-8.5"]
-#     colors = sns.color_palette("coolwarm", n_colors=4)
-
-#     sns.stripplot(
-#         data=df_filtered,
-#         x="Key",
-#         y="Value",
-#         hue="Key",
-#         size=5,
-#         edgecolor="k",
-#         linewidth=1,
-#         palette=colors[1:],
-#         ax=axes.flatten()[idx],
-#     )
-#     # sns.violinplot(
-#     #     data=df_filtered,
-#     #     x="Key",
-#     #     y="Value",
-#     #     hue="Key",
-#     #     palette=colors[1:],
-#     #     width=1,
-#     #     ax=axes.flatten()[idx],
-#     # )
-
-#     # axes.flatten()[idx].set_xticks(
-#     #     ticks=range(len(labels) - 1),
-#     #     labels=labels[1:],
-#     #     ha="right",
-#     #     rotation=45,
-#     # )
-
-#     axes.flatten()[idx].grid()
-#     # axes.flatten()[idx].set_xlabel("")
-#     # axes.flatten()[idx].set_ylabel(r"$\phi$", rotation=0, labelpad=10)
-#     # axes.flatten()[idx].set_ylim(top=7.7)
-#     axes.flatten()[idx].set_title(_airport_code)
-
-#     # def add_degree_symbol(y, pos):
-#     #     return f"{y:.2f}°"
-
-#     # axes.flatten()[idx].yaxis.set_major_formatter(plt.FuncFormatter(add_degree_symbol))
-
-
-# plt.show();
-# -
 
 obj = pd.read_pickle(
     "~/jupyter/"
@@ -2385,4 +2225,3 @@ cbar.ax.xaxis.set_major_formatter(FormatStrFormatter("%g"))
 plt.savefig("Figures/Figure6.svg", dpi=300, bbox_inches="tight")
 
 plt.show()
-# -

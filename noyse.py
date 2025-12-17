@@ -1449,9 +1449,6 @@ airport_to_country = {
 # Check ---> EGLC is London City so should be 'gbr'.
 airport_to_country["EGLC"]
 
-for _airport_code in airport_codes:
-    file_name = str(airport_to_country[_airport_code]) + "*.tif"
-
 population_densities = {}
 
 

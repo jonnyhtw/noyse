@@ -361,6 +361,7 @@ for idx, j in enumerate(
     # ax.set_ylabel("Frequency [Hz]")
     ax.set_ylabel(r"$\mathrm{\alpha\ [dB/m]}$")
 
+plt.savefig("Figures/Figure2.svg", dpi=300, bbox_inches="tight")
 
 plt.show()
 # -
@@ -634,6 +635,7 @@ axes.flatten()[1].text(
 axes.flatten()[0].set_title("(a)")
 axes.flatten()[1].set_title("(b)")
 
+plt.savefig("Figures/Figure3.svg", dpi=300, bbox_inches="tight")
 
 plt.show()
 # -
@@ -794,6 +796,7 @@ axes[0].set_ylim(bottom=lhc_I0s[0])
 
 [ax.set_xlim(7.2, 7.7) for ax in [axes[0]]]
 
+plt.savefig("Figures/Figure4.svg", dpi=300, bbox_inches="tight")
 
 plt.show()
 
@@ -1215,7 +1218,7 @@ it only depends on the smallest one!
     if airport_code == "LGHI":
         ax2.remove()
         ax2 = fig.add_subplot(122)
-        ax2.imshow(mpimg.imread("./image.png"), aspect="auto")
+        ax2.imshow(mpimg.imread("./image.svg"), aspect="auto")
         ax2.axis("off")
         ax2.set_frame_on(False)
     else:
@@ -1286,6 +1289,9 @@ it only depends on the smallest one!
         with open("./contours/" + filename, "wb") as file:
             pickle.dump(contours_dict, file)
 
+    if period == "historical":
+        plt.savefig("Figures/Figure1.svg", dpi=300, bbox_inches="tight")
+
     plt.show()
 # -
 
@@ -1299,23 +1305,6 @@ for i in [6, 7, 8]:
     deltanj
 
 my_freq
-
-
-# # Figs for paper etc
-
-
-# +
-fig, ax = plt.subplots(
-    nrows=1,
-    ncols=1,
-)
-fig.set_figwidth(3)
-fig.set_figheight(3)
-
-ax.plot(source_ys, source_zs)
-ax.scatter(0, 0, facecolors="none", edgecolors="k")
-plt.show()
-# -
 
 
 # +
@@ -1338,9 +1327,6 @@ df.to_csv(
 )
 # -
 
-
-# + editable=true slideshow={"slide_type": ""}
-areas
 
 # +
 areas
@@ -1374,7 +1360,7 @@ df.to_csv(
 )
 # -
 
-# # Quit here if running batches on the RACC
+# # Quit here if running batches on an external cluster with a scheduler like Slurm.
 
 if batch:
     print("Running with papermill on RACC, exiting here.")
@@ -1576,18 +1562,8 @@ files = [
 
 pop_density = {}
 
-# Use the viridis colormap with 5 discrete colors
-# cmap = plt.get_cmap("viridis", len(levels) - 1)
-
 
 for idy, _file in enumerate(range(len(files))):
-
-    # fig, axes = plt.subplots(
-    #     nrows=5, ncols=6, subplot_kw={"projection": ccrs.PlateCarree()}
-    # )
-    # fig.set_figheight(10)
-    # fig.set_figwidth(10)
-    # axes = axes.flatten()
 
     for idx, _airport_code in tqdm(enumerate(airport_codes)):
 
@@ -1607,20 +1583,6 @@ for idy, _file in enumerate(range(len(files))):
 
         fpop = fpop.sel(lat=slice(lat_min, lat_max), lon=slice(lon_min, lon_max))
 
-        # mesh = axes[idx].pcolormesh(
-        #     fpop["lon"].squeeze(),
-        #     fpop["lat"].squeeze(),
-        #     fpop["pop_count"].squeeze(),
-        #     cmap=cmap,
-        #     norm=mcolors.BoundaryNorm(levels, cmap.N),
-        #     transform=ccrs.PlateCarree(),
-        #     alpha=0.75,
-        # )
-
-        # axes.flatten()[idx].add_feature(cfeature.LAND)
-        # axes.flatten()[idx].add_feature(cfeature.OCEAN)
-        # axes.flatten()[idx].add_feature(cfeature.BORDERS)
-
         area_of_extracted_region = (
             np.cos(np.radians(airport_coordinates[_airport_code][0]))
             * m_in_deg_at_equator
@@ -1636,26 +1598,6 @@ for idy, _file in enumerate(range(len(files))):
         pop_density[_airport_code + "_" + periods[idy]] = (
             fpop["pop_count"].squeeze().sum().item() / area_of_extracted_region
         )
-
-#         axes.flatten()[idx].set_title(
-#             "("
-#             + list(string.ascii_lowercase + string.ascii_uppercase)[idx]
-#             + ") "
-#             + _airport_code
-#             + ", "
-#             # + str(int(round(pop_density, -3))),
-#             f"{int(round(pop_density[_airport_code + '_'+periods[idy]], -2)):,}",
-#             fontsize=7.5,
-#         )
-
-#     cbar = fig.colorbar(
-#         mesh, ax=axes, orientation="horizontal", fraction=0.05, pad=0.1, extend="max"
-#     )
-#     cbar.set_ticks(levels)
-
-#     plt.suptitle(str(periods[idy]))
-
-# plt.show();
 # -
 
 
@@ -1714,7 +1656,7 @@ for idx, _airport_code in tqdm(enumerate(airport_codes)):
 
 
 # plt.suptitle("Base 10 logarithm of population density per km squared  ")
-
+plt.savefig("Figures/Figure7.svg", dpi=300, bbox_inches="tight")
 plt.show()
 
 # +
@@ -1921,6 +1863,7 @@ plt.suptitle(
     "Percentage change in populations affected by 50dB SPL noise\nrelative to historical conditions, "
     + "the 3 bar plots are for SSP1, 3 and 5 (blue, black, red)"
 )
+plt.savefig("Figures/Figure8.svg", dpi=300, bbox_inches="tight")
 
 plt.show()
 # -
@@ -2033,6 +1976,9 @@ plt.suptitle(
     "Absolute change in populations affected by 50dB SPL noise\nrelative to historical conditions, "
     + "the 3 bar plots are for SSP1, 3 and 5 (blue, black, red)"
 )
+
+plt.savefig("Figures/FigureA1.svg", dpi=300, bbox_inches="tight")
+
 
 plt.show()
 # -
@@ -2436,6 +2382,7 @@ cbar.ax.invert_xaxis()
 
 cbar.ax.xaxis.set_major_formatter(FormatStrFormatter("%g"))
 
+plt.savefig("Figures/Figure6.svg", dpi=300, bbox_inches="tight")
 
 plt.show()
 # -

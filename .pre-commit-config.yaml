@@ -5,16 +5,20 @@ repos:
   - repo: local
     hooks:
 
-      # 1)
       - id: remove-unused-imports 
-        name: "Ruff checkout for unused import statements"
+        name: "Hook #1 Ruff checkout for unused import statements"
         language: system
         entry: bash -lc 'ruff check --select F401 noyse.ipynb'
         pass_filenames: false
 
-      # 1) Convert notebook to script and stage it
+      - id: remove-unused-imports 
+        name: "Hook #2 Ruff checkout for commented out code"
+        language: system
+        entry: bash -lc 'ruff check --select ERA001 noyse.ipynb'
+        pass_filenames: false
+    
       - id: jupytext
-        name: "Jupytext: ipynb -> py (noyse)"
+        name: "Hook #3 Jupytext: ipynb -> py (noyse)"
         language: system
         entry: bash -lc 'jupytext --to py noyse.ipynb'
         pass_filenames: false

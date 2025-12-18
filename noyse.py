@@ -16,10 +16,8 @@
 import copy
 import csv
 import glob
-import inspect
 import numpy as np
 from scipy.stats import qmc
-import geojson
 
 import math
 from matplotlib.ticker import FormatStrFormatter
@@ -39,49 +37,27 @@ import seaborn as sns
 
 jupyter_black.load()
 
-import re
 import string
 
 import airportsdata
-import cartopy.feature as cfeature
 import cartopy.io.img_tiles as cimgt
-import emoji
-import isort
 import matplotlib.patches as patches
 import matplotlib.pyplot as plt
-import matplotlib.ticker as mtick
-import matplotlib.transforms as transforms
-import netCDF4 as nc
 import numpy as np
-import numpy.ma as ma
 import pandas as pd
 import scipy
 import seaborn as sns
 import xarray as xr
-from cartopy.mpl.gridliner import LATITUDE_FORMATTER, LONGITUDE_FORMATTER
 from IPython.core.interactiveshell import InteractiveShell
-from IPython.display import clear_output
-from matplotlib.cbook import boxplot_stats
-from matplotlib.offsetbox import AnchoredText
-from matplotlib.patches import ConnectionPatch
 from matplotlib.ticker import (
     FormatStrFormatter,
-    FuncFormatter,
-    MaxNLocator,
-    PercentFormatter,
 )
-from numpy import asarray, savetxt
-from openap import Drag, Thrust, prop
-from openap.kinematic import WRAP
-from rich.__main__ import make_test_card
 from rich.jupyter import print
-from scipy import interpolate, optimize, stats
 from tqdm.notebook import tqdm
 
 InteractiveShell.ast_node_interactivity = "last_expr"
 import copy
 import csv
-import datetime as dt
 import math
 import os
 import string
@@ -89,37 +65,27 @@ import sys
 
 import airportsdata
 import cartopy.crs as ccrs
-import cartopy.feature as cfeature
 import cartopy.io.img_tiles as cimgt
 import pandas as pd
 
-import matplotlib.colors as mcolors
 import matplotlib.patches as patches
-from matplotlib.patches import Arc, Ellipse, FancyArrowPatch
+from matplotlib.patches import Ellipse
 
-import matplotlib.dates as mdates
 import matplotlib.image as mpimg
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 import matplotlib.pyplot as plt
-import nc_time_axis
 import numpy as np
-from geopy.geocoders import Nominatim
-from joblib import Parallel, delayed
-from matplotlib.ticker import EngFormatter, StrMethodFormatter
 
 InteractiveShell.ast_node_interactivity = "all"
 
 from matplotlib.colors import TwoSlopeNorm
 
-import rasterio
 import scipy
 import seaborn as sns
-from pyproj import Geod, Proj, transform
+from pyproj import Geod
 from scipy.ndimage import gaussian_filter1d
 from shapely.geometry import Polygon
-from shapely.ops import unary_union
-from shapely.validation import make_valid
 from tqdm import tqdm
 
 # -

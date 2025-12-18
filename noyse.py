@@ -1390,17 +1390,6 @@ for idx, _airport_code in enumerate(airport_codes):
     labels = ["Historical", "SSP 1-2.6", "SSP 3-7.0", "SSP 5-8.5"]
     colors = sns.color_palette("coolwarm", n_colors=4)
 
-    # Plot the data using seaborn
-    # sns.boxplot(
-    #     data=df_filtered,
-    #     x="Key",
-    #     y="Value",
-    #     color="k",
-    #     linewidth=1,
-    #     alpha=0.5,
-    #     ax=axes.flatten()[idx],
-    #     facecolors="none",
-    # )
     sns.boxplot(
         data=df_filtered,
         x="Key",
@@ -1620,8 +1609,6 @@ for idx, _airport_code in tqdm(enumerate(airport_codes)):
 
     axes[idx].set(ylabel=None)
     axes[idx].set_xlim(0, 5)
-    # axes[idx].set_yticks([1, 2, 3, 4])
-    # axes[idx].set_yticklabels([r"$10$", r"$10^2$", r"$10^3$", r"$10^4$"])
     axes[idx].set_facecolor("whitesmoke")
     axes[idx].grid(axis="y")
 
@@ -1713,9 +1700,6 @@ with open(
     pickle.dump(
         floats_only_dict, f
     )  # <--- what this is saving is the total population (absolute value)
-
-# +
-# {k: v for k, v in pop_density.items() if _airport_code in k}.values()
 
 # +
 my_freqs = [
@@ -1900,16 +1884,6 @@ for idf, _my_freq in enumerate(my_freqs):
                     + str(_my_freq)
                     + "_Hz"
                 ].values
-                # / obj[
-                #     _airport_code
-                #     + "_"
-                #     + "historical"
-                #     + "_"
-                #     + "population_at_"
-                #     + str(_my_freq)
-                #     + "_Hz"
-                # ].values
-                # * 100
             )
 
             take_population_change_into_account = True
@@ -1988,11 +1962,6 @@ for _airport_code in airport_codes:
         for k, v in population_percentage_numbers.items()
         if k.startswith(_airport_code) and "ssp585" in k and "50_Hz" in k
     }
-    # filtered_dict
-
-    # filtered_dict
-
-    # airports[_airport_code]["name"], _airport_code
 
     bar_arr.append(
         list(filtered_dict.values())[0]
@@ -2135,17 +2104,10 @@ for marker in df["marker"].unique():
         marker=marker,
         hue="climb_angle",
         #      hue_norm=norm,
-        # norm=norm,
         space=0,
-        # size = 'climb_angle',sizes=(0,100),
         palette=cmap,
-        # legend=marker=='o',
         edgecolor="k",
         legend=False,
-        # edgecolor = edgecolor,
-        # ax=ax
-        # kind='reg'
-        # marginal_kws=dict(fill=False)
     )
 
     g.ax_marg_x.clear()
@@ -2157,7 +2119,6 @@ for marker in df["marker"].unique():
         fill=True,
         ax=g.ax_marg_x,
         kde=True,
-        # color='gold',
     )
     sns.histplot(
         data=df,
@@ -2165,7 +2126,6 @@ for marker in df["marker"].unique():
         fill=True,
         ax=g.ax_marg_y,
         kde=True,
-        # color='gold',
     )
 
     g.ax_joint.set_facecolor("whitesmoke")
@@ -2175,9 +2135,6 @@ for marker in df["marker"].unique():
     g.ax_marg_y.xaxis.set_visible(False)
     g.ax_marg_y.yaxis.set_visible(False)
 
-    # g.ax_marg_x.text(0.6,0.05,'occurrence frequency', transform=g.ax_marg_x.transAxes,
-    #                 ha = 'right', )
-
 
 plt.ylabel(
     "P [hPa]",
@@ -2185,9 +2142,6 @@ plt.ylabel(
 plt.xlabel(
     "T [C]",
 )
-
-
-# plt.gcf().set_facecolor('whitesmoke', )
 
 
 norm = plt.Normalize(df["climb_angle"].min(), df["climb_angle"].max())

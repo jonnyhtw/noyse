@@ -1,12 +1,9 @@
 name: Black formatting & Python syntax check
 
-
 on:
   pull_request:
     branches: [ main, master ]
   push:
-
-
 
 jobs:
   style-and-syntax:
@@ -32,5 +29,4 @@ jobs:
       - name: Syntax check (compile all .py files)
         run: |
           python -m compileall -q .
-
 

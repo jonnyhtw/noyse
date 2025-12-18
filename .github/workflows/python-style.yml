@@ -1,25 +1,31 @@
 name: Black formatting & Python syntax check
 
-
 on:
+  push:                      # all branches
   pull_request:
     branches: [ main, master ]
-  push:
 
-
+concurrency:
+  group: style-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   style-and-syntax:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
-      - name: Checkout
+      - name: Checkout triggering commit
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-                   python-version: "3.12"  # pick your project's version
+          python-version: "3.12"
+          cache: "pip"
 
       - name: Install Black
         run: |
@@ -27,7 +33,7 @@ jobs:
           pip install black
 
       - name: Check Black formatting (no changes allowed)
-        run: black --check --diff .
+        run: black --check --diff --color .
 
       - name: Syntax check (compile all .py files)
         run: |

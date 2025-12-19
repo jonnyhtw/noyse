@@ -5,7 +5,6 @@ repos:
   - repo: local
     hooks:
 
-
       - id: remove-unused-imports
         name: "Hook #1 Ruff checkout for unused import statements"
         language: python

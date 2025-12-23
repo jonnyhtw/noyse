@@ -1,0 +1,8 @@
+
+# jupytext.toml
+formats = "ipynb,py:percent"
+
+# Remove notebook & cell metadata from exported .py files:
+notebook_metadata_filter = "-all"
+cell_metadata_filter = "-all"
+

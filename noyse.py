@@ -1,18 +1,3 @@
-# ---
-# jupyter:
-#   jupytext:
-#     formats: ipynb,py:percent
-#     text_representation:
-#       extension: .py
-#       format_name: percent
-#       format_version: '1.3'
-#       jupytext_version: 1.16.1
-#   kernelspec:
-#     display_name: Python 3 (ipykernel)
-#     language: python
-#     name: python3
-# ---
-
 # %%
 import copy
 import csv
@@ -20,7 +5,6 @@ import glob
 import math
 import os
 import pickle
-
 import jupyter_black
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
@@ -28,11 +12,8 @@ import numpy as np
 import seaborn as sns
 from matplotlib.ticker import FormatStrFormatter
 from scipy.stats import qmc
-
 jupyter_black.load()
-
 import string
-
 import airportsdata
 import cartopy.io.img_tiles as cimgt
 import matplotlib.patches as patches
@@ -41,22 +22,17 @@ import scipy
 import xarray as xr
 from IPython.core.interactiveshell import InteractiveShell
 from rich.jupyter import print
-
 InteractiveShell.ast_node_interactivity = "last_expr"
 import sys
-
 import cartopy.crs as ccrs
 import matplotlib.image as mpimg
 from matplotlib.patches import Ellipse
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
-
 InteractiveShell.ast_node_interactivity = "all"
-
 from matplotlib.colors import TwoSlopeNorm
 from pyproj import Geod
 from scipy.ndimage import gaussian_filter1d
 from shapely.geometry import Polygon
-from tqdm import tqdm
 from tqdm import tqdm
 
 
@@ -162,13 +138,13 @@ runway_bearings = {
     "LTFM": 179.11,
 }
 
-# %% editable=true slideshow={"slide_type": ""}
+# %%
 periods = ["historical", "ssp126", "ssp370", "ssp585"]
 
 # %%
 Rspecific = 287.052874
 
-# %% editable=true slideshow={"slide_type": ""}
+# %%
 # make sure I understand fundamental maths!
 math.degrees(math.asin(math.sin(math.radians(10))))
 
@@ -301,7 +277,7 @@ plt.savefig("Figures/Figure2.svg", dpi=300, bbox_inches="tight")
 
 plt.show()
 
-# %% editable=true slideshow={"slide_type": ""}
+# %%
 n = 2  # Exponent of noise fall off, 1/r^n
 
 
@@ -321,7 +297,7 @@ def noise_level_at_distance(source_level, distance, my_temperature_in_K):
     )
 
 
-# %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
+# %%
 """
 parameter cell for papermill
 """
@@ -723,7 +699,7 @@ optimum_climb_angle
 optimum_source_level = scaled_latin_hypercube[np.argmin(_y)][1]
 optimum_source_level
 
-# %% editable=true slideshow={"slide_type": ""}
+# %%
 areas = {}
 
 runway_length = runway_lengths[airport_code]

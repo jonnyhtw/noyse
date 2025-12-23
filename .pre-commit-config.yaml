@@ -6,10 +6,9 @@ repos:
     hooks:
  
       - id: jupytext
-        name: "Hook #3 Jupytext: ipynb -> py (noyse)"
+        name: "Verify: Python files compile (syntax check"
         language: python
-        additional_dependencies: [jupytext==1.16.1]
-        entry: jupytext
-        args: [--to, py, noyse.ipynb]
+        entry: python
+        args: [-m, compileall, -q, .]
         pass_filenames: false
 

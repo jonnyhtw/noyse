@@ -6,9 +6,9 @@ repos:
     hooks:
  
       - id: jupytext
-        name: "Verify: Python files compile (syntax check"
+        name: "Jupytext"
         language: python
-        entry: python
-        args: [-m, compileall, -q, .]
+        entry: jupytext
+        args: [--to, py, noyse.ipynb]
         pass_filenames: false
 

@@ -5,10 +5,16 @@ repos:
   - repo: local
     hooks:
  
-      - id: jupytext
-        name: "Jupytext"
-        language: python
-        entry: jupytext
-        args: [--to, py, noyse.ipynb]
-        pass_filenames: false
+        #- id: jupytext
+        #       name: "Jupytext"
+        #  language: python
+        #  entry: jupytext
+        # args: [--to, py, noyse.ipynb]
+        # pass_filenames: false
 
+      - id: jupytext
+        name: "Black"
+        language: python
+        entry: black
+        args: [--check, --diff, noyse.py]
+        pass_filenames: false

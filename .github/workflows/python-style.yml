@@ -1,6 +1,6 @@
 
 # .github/workflows/python-style.yml
-name: Ruff lint & format (py only) + Python syntax check
+name: Ruff lint & format (py only)
 
 on:
   pull_request:
@@ -10,7 +10,6 @@ on:
 jobs:
   style-and-syntax:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,13 +22,14 @@ jobs:
       - name: Ruff lint (.py only, with annotations)
         uses: astral-sh/ruff-action@v3
         with:
+          # pass the paths as separate args (no newlines!)
           args: check --output-format=github . src tests
 
-      - name: Ruff format (check only; no changes in CI)
+      - name: Ruff format (check only; .py only)
         uses: astral-sh/ruff-action@v3
         with:
           args: format --diff . src tests
 
-      - name: Python syntax check (compile all .py)
+      - name: Python syntax check
         run: python -m compileall -q .
 

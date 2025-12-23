@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.18.1
+#       jupytext_version: 1.16.1
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -358,8 +358,6 @@ parameter cell for papermill
 """
 
 airport_code = "EGLL"
-# airport_code = "LESO"
-# model = "UKESM1-0-LL"
 model = "ACCESS-ESM1-5"
 batch = False
 _2030 = False
@@ -409,7 +407,6 @@ for i in np.arange(10):
             facecolor = "k"
 
         offset = (i - 2) * 0.05 * j
-        # print(offset)
         axes.flatten()[1].add_patch(
             Ellipse(
                 (offset, i - 1),
@@ -443,8 +440,6 @@ axes.flatten()[1].add_patch(
 
 plt.subplots_adjust(wspace=-0.5)
 
-# for ax in axes.flatten():
-#     ax.axis('off')
 
 axes.flatten()[0].text(
     0.25,
@@ -529,16 +524,12 @@ inset_ax = inset_axes(
 x = np.linspace(-2, 2, 100)
 inset_ax.plot(x, np.exp(-(x**2)), color="r", linewidth=2, alpha=0.5)
 
-# inset_ax.fill_between(x, 0, np.exp(-x**2), where=(x >= -1/np.sqrt(2)) & (x <= 1/np.sqrt(2)),
-#                       color='gray', alpha=0.5)
 
 
 inset_ax.patch.set_alpha(0.5)
-# inset_ax.axis('off')
 # Hide the top, right, and bottom spines
 inset_ax.spines["top"].set_visible(False)
 inset_ax.spines["right"].set_visible(False)
-# inset_ax.spines['bottom'].set_visible(False)
 inset_ax.spines["left"].set_color("red")
 inset_ax.yaxis.label.set_color("red")
 inset_ax.tick_params(axis="y", colors="red")
@@ -625,7 +616,6 @@ scaled_latin_hypercube = qmc.scale(
     latin_hypercube, [lhc_angles[0], lhc_I0s[0]], [lhc_angles[1], lhc_I0s[1]]
 )
 
-# print(scaled_latin_hypercube)
 
 fig, axes = plt.subplots(nrows=1, ncols=2, layout="constrained")
 
@@ -692,13 +682,11 @@ axes[1].plot(
     np.delete(np.arange(n_samples) + 1, np.argmin(_y)),
     np.delete(_y, np.argmin(_y)),
     "ob",
-    # color=[0,0,1,0.2], markeredgecolor = 'k'
 )
 axes[1].plot(
     (np.arange(n_samples) + 1)[np.argmin(_y)],
     _y[np.argmin(_y)],
     "sr",
-    # color=[1,0,0,0.2],
     markeredgecolor="k",
 )
 
@@ -729,8 +717,6 @@ axes[0].set_ylabel(
 axes[1].set_ylabel(
     r"$\left|A_{50}-\mathcal{A}\right|$" + " [km" + r"$^2$" + "]",
     fontsize=11,
-    # rotation=0,
-    # labelpad=25,
 )
 axes[0].vlines(
     x=scaled_latin_hypercube[np.argmin(_y)][0],
@@ -755,7 +741,6 @@ axes[0].set_ylim(bottom=lhc_I0s[0])
 [ax.tick_params(axis="y", which="both", length=0) for ax in axes]
 
 
-# axes[1].set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1])
 
 
 [ax.set_xlim(7.2, 7.7) for ax in [axes[0]]]
@@ -875,8 +860,6 @@ for period in tqdm(periods):
     # https://pressbooks.lib.vt.edu/aerodynamics/chapter/chapter-5-altitude-change-climb-and-guide/
 
     climb_angle1_0 = optimum_climb_angle
-    # climb_angle1_0 = scaled_latin_hypercube[idy][0]
-    # climb_angle1_0 = 7.7
 
     climb_angle1 = math.degrees(
         math.asin(
@@ -891,8 +874,6 @@ for period in tqdm(periods):
     climb_angle_adjustments[period] = climb_angle1 / climb_angle1_0
 
     climb_angle2_0 = optimum_climb_angle
-    # climb_angle2_0 = scaled_latin_hypercube[idy][0]
-    # climb_angle2_0 = 7.7
 
     climb_angle2 = math.degrees(
         math.asin(
@@ -907,12 +888,8 @@ for period in tqdm(periods):
     ##################################################################
 
     source_level1 = optimum_source_level
-    # source_level1 = scaled_latin_hypercube[idy][1]
-    # source_level1 = 100
 
     source_level2 = optimum_source_level
-    # source_level2 = scaled_latin_hypercube[idy][1]
-    # source_level2 = 100
 
     source_zs = [
         -takeoff_distance * math.tan(math.radians(climb_angle1))
@@ -957,8 +934,6 @@ for period in tqdm(periods):
         source_z = source_zs[i]
 
         distance_between_sources = 11.2e0
-        # distance_between_sources = 11.2e0*10
-        # distance_between_sources = 11.2e0*20
 
         distances1 = np.sqrt(
             (X - (source_x - distance_between_sources / 2)) ** 2
@@ -1016,14 +991,12 @@ for period in tqdm(periods):
     angles = np.linspace(-theta, theta, steps)
 
     weights = np.exp(-(angles**2) / _2sigma2)
-    # weights = np.ones(len(angles))
 
     for i in range(steps):
         Js.append(scipy.ndimage.rotate(J * weights[i], angles[i], reshape=False))
 
     J_max = np.max(Js, axis=0)
 
-    # J_max_rotated = scipy.ndimage.rotate(J_max, runway_bearing , reshape=False)
 
     J_maxs[period] = J_max
 
@@ -1078,9 +1051,6 @@ for period in tqdm(periods):
             )
         )
 
-    # contour_for_area_calculation = [
-    #     50,
-    # ]
     contour_for_area_calculation = [
         50,
         55,
@@ -1098,9 +1068,6 @@ it only depends on the smallest one!
         Y_deg_rotated,
         J_max,
         levels=contour_for_area_calculation,
-        # cmap='viridis_r',
-        # colors = ['k','b','r'],
-        # linestyles='--',
         alpha=0.5,
         transform=ccrs.PlateCarree(),
         extend="max",
@@ -1112,10 +1079,8 @@ it only depends on the smallest one!
         J_max,
         levels=contour_for_area_calculation,
         colors=["k"],
-        # linestyles='--',
         alpha=0.5,
         transform=ccrs.PlateCarree(),
-        # extend='max'
     )
 
     if len(contour_for_area_calculation) > 1:
@@ -1170,14 +1135,6 @@ it only depends on the smallest one!
         transform=ccrs.PlateCarree(),
     )
 
-    # ax1.set_title(
-    #     r"$\alpha=$"
-    #     + str(
-    #         get_alpha_for_temperature(
-    #             my_temperature_in_K - scipy.constants.zero_Celsius
-    #         )
-    #     )
-    # )
 
     if airport_code == "LGHI":
         ax2.remove()
@@ -1210,7 +1167,6 @@ it only depends on the smallest one!
 
     areas[period] = total_area
 
-    # ax2.remove()
 
     save_contours = False
 
@@ -1336,8 +1292,6 @@ for idx, _airport_code in enumerate(airport_codes):
         and ("mean" in filename)
         and ("_2030" in filename if _2030 else "_2030" not in filename)
     ]:
-        # if idx == 0:
-        #     print(filename)
         df = pd.read_csv(os.path.join(directory, filename))
         dataframes.append(df)
 
@@ -1366,8 +1320,6 @@ for idx, _airport_code in enumerate(airport_codes):
         hue="Key",
         palette=colors[1:],
         ax=axes.flatten()[idx],
-        # inner=None,
-        # cut=0,
     )
     axes.flatten()[idx].set_xticks(
         ticks=range(len(labels) - 1), labels=labels[1:], rotation=0
@@ -1470,7 +1422,6 @@ population_densities = {}
 
 # %%
 # Define the discrete color levels
-# levels = [0, 250, 500, 750, 1000]
 levels = np.linspace(0, 500, 11)
 levels = np.array(
     [

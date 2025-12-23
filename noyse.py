@@ -1591,7 +1591,6 @@ for idx, _airport_code in tqdm(enumerate(airport_codes)):
     )
 
 
-# plt.suptitle("Base 10 logarithm of population density per km squared  ")
 plt.savefig("Figures/Figure7.svg", dpi=300, bbox_inches="tight")
 plt.show()
 

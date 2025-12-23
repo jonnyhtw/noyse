@@ -1,6 +1,6 @@
 
 # .github/workflows/python-style.yml
-name: Ruff lint & format (py only)
+name: Format (py only)
 
 on:
   pull_request:

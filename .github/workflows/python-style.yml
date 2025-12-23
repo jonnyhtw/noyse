@@ -1,6 +1,6 @@
 
 # .github/workflows/python-style.yml
-name: Ruff lint & format (Black-compatible) + Python syntax check
+name: Ruff lint & format (py only) + Python syntax check
 
 on:
   pull_request:
@@ -18,27 +18,30 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"  # match your project
+          python-version: "3.12"
 
-      # Run Ruff with built-in annotations; defaults to `ruff check`.
+      # Lint .py files only (inline annotations via --output-format=github)
       - name: Ruff (lint)
         uses: astral-sh/ruff-action@v3
         with:
-          # Optional: pin Ruff version or pass args
-          # version: 0.14.10
-          args: check --output-format=github .
-          # Using the "github" output format enables inline annotations on PRs
-          # (documented in Ruff integrations).
-          # https://docs.astral.sh/ruff/integrations/#github-actions
+          args: check --output-format=github
+          # Limit to .py code locations (adjust as needed)
+          src: |
+            .
+            ./src
+            ./tests
 
-      # Optional: formatting check in CI (no changes allowed)
-      # Shows a diff if any file would be reformatted.
+      # Optional: format check on .py only (no changes allowed in CI)
       - name: Ruff (format check)
         uses: astral-sh/ruff-action@v3
         with:
-          args: format --diff .
+          args: format --diff
+          src: |
+            .
+            ./src
+            ./tests
 
-      # Keep your syntax check: compile all Python files
+      # Syntax check remains (compile Python sources)
       - name: Python syntax check (compileall)
         run: python -m compileall -q .
 

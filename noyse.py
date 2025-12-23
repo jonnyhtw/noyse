@@ -1559,7 +1559,6 @@ for idx, _airport_code in tqdm(enumerate(airport_codes)):
 
     axes[idx].scatter(
         [1, 2, 3, 4],
-        # np.sign(plotthis) * np.log10(abs(plotthis)),
         plotthis,
         color=sns.color_palette("coolwarm", n_colors=4),
         edgecolor="k",
@@ -1574,8 +1573,6 @@ for idx, _airport_code in tqdm(enumerate(airport_codes)):
     axes[idx].tick_params(axis="x", labelsize=8)
     axes[idx].tick_params(axis="y", labelsize=8)
 
-    # else:
-    #     axes[idx].set_xticks([])
 
     axes[idx].set(ylabel=None)
     axes[idx].set_xlim(0, 5)

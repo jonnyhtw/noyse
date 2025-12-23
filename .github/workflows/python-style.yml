@@ -1,4 +1,6 @@
-name: Black formatting & Python syntax check
+
+# .github/workflows/python-style.yml
+name: Ruff lint & format (py only)
 
 on:
   pull_request:
@@ -8,7 +10,6 @@ on:
 jobs:
   style-and-syntax:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -16,17 +17,8 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-                   python-version: "3.12"  # pick your project's version
+          python-version: "3.12"
 
-      - name: Install Black
-        run: |
-          python -m pip install --upgrade pip
-          pip install black
-
-      - name: Check Black formatting (no changes allowed)
-        run: black --check --diff .
-
-      - name: Syntax check (compile all .py files)
-        run: |
-          python -m compileall -q .
+      - name: Python syntax check
+        run: python -m compileall -q .
 

@@ -1,0 +1,15 @@
+
+fail_fast: true
+
+repos:
+  - repo: local
+    hooks:
+ 
+      - id: jupytext
+        name: "Hook #3 Jupytext: ipynb -> py (noyse)"
+        language: python
+        additional_dependencies: [jupytext==1.16.1]
+        entry: jupytext
+        args: [--to, py, noyse.ipynb]
+        pass_filenames: false
+

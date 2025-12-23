@@ -12,7 +12,6 @@ import numpy as np
 import seaborn as sns
 from matplotlib.ticker import FormatStrFormatter
 from scipy.stats import qmc
-jupyter_black.load()
 import string
 import airportsdata
 import cartopy.io.img_tiles as cimgt
@@ -20,21 +19,19 @@ import matplotlib.patches as patches
 import pandas as pd
 import scipy
 import xarray as xr
-from IPython.core.interactiveshell import InteractiveShell
 from rich.jupyter import print
-InteractiveShell.ast_node_interactivity = "last_expr"
 import sys
 import cartopy.crs as ccrs
 import matplotlib.image as mpimg
 from matplotlib.patches import Ellipse
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
-InteractiveShell.ast_node_interactivity = "all"
 from matplotlib.colors import TwoSlopeNorm
 from pyproj import Geod
 from scipy.ndimage import gaussian_filter1d
 from shapely.geometry import Polygon
 from tqdm import tqdm
 
+jupyter_black.load()
 
 # %%
 airport_coordinates = {

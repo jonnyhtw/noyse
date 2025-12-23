@@ -1545,8 +1545,6 @@ for idy, _file in enumerate(range(len(files))):
 fig, axes = plt.subplots(
     nrows=5,
     ncols=6,
-    # sharex=True,
-    # sharey=True,
     layout="constrained",
 )
 fig.set_figheight(5)
@@ -1656,7 +1654,6 @@ for idx, _airport_code in enumerate(airport_codes):
 
             pass
 
-        # print(value)
 
         floats_only_dict[
             _airport_code + "_" + period + "_" + "population_at_" + str(my_freq) + "_Hz"
@@ -1687,7 +1684,6 @@ population_percentage_numbers = {}
 fig, axes = plt.subplots(
     nrows=len(my_freqs),
     ncols=1,
-    # sharex=True,
     sharey=True,
     layout="constrained",
     figsize=(10, 6),
@@ -1769,7 +1765,6 @@ for idf, _my_freq in enumerate(my_freqs):
                 _airport_code + "_" + period + "_at_" + str(_my_freq) + "_Hz"
             ] = np.max(plotthis[plotthis <= upper_whisker_threshold])
 
-            # print("Upper whisker value:", upper_whisker)
 
             axes[idf].boxplot(
                 plotthis,
@@ -1817,8 +1812,6 @@ my_freqs = [
 fig, axes = plt.subplots(
     nrows=len(my_freqs),
     ncols=1,
-    # sharex=True,
-    # sharey=True,
     layout="constrained",
     figsize=(10, 6),
 )
@@ -1872,7 +1865,6 @@ for idf, _my_freq in enumerate(my_freqs):
             axes[idf].boxplot(
                 plotthis,
                 positions=[(idz + 1) + (5 * idx)],
-                # showfliers=False,
                 widths=0.75,
                 patch_artist=True,
                 boxprops=dict(facecolor="lightblue", color=boxplotcolors[idz]),
@@ -2025,7 +2017,6 @@ obj = pd.read_pickle(
 )
 
 # %%
-# fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(5,5))
 
 period = "ssp585"
 
@@ -2079,7 +2070,6 @@ for marker in df["marker"].unique():
         y=subset["P"],
         marker=marker,
         hue="climb_angle",
-        #      hue_norm=norm,
         space=0,
         palette=cmap,
         edgecolor="k",

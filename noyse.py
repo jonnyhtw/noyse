@@ -1890,13 +1890,7 @@ obj = pd.read_pickle(
     "~/jupyter/"
     + "pickles-"
     + ac
-    + "/vars_"
-    + "UKESM1-0-LL"
-    + "_"
-    + "LESO"
-    + "_JJA"
-    + "_2030" * (_2030 == False)
-    + ".pkl"
+    + "/vars_UKESM1-0-LL_LESO_JJA_Williams_et_al.-Figure_6.pkl"
 )
 
 # %%

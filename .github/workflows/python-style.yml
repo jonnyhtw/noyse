@@ -20,28 +20,16 @@ jobs:
         with:
           python-version: "3.12"
 
-      # Lint .py files only (inline annotations via --output-format=github)
-      - name: Ruff (lint)
+      - name: Ruff lint (.py only, with annotations)
         uses: astral-sh/ruff-action@v3
         with:
-          args: check --output-format=github
-          # Limit to .py code locations (adjust as needed)
-          src: |
-            .
-            ./src
-            ./tests
+          args: check --output-format=github . src tests
 
-      # Optional: format check on .py only (no changes allowed in CI)
-      - name: Ruff (format check)
+      - name: Ruff format (check only; no changes in CI)
         uses: astral-sh/ruff-action@v3
         with:
-          args: format --diff
-          src: |
-            .
-            ./src
-            ./tests
+          args: format --diff . src tests
 
-      # Syntax check remains (compile Python sources)
-      - name: Python syntax check (compileall)
+      - name: Python syntax check (compile all .py)
         run: python -m compileall -q .
 

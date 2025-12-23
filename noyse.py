@@ -302,7 +302,6 @@ parameter cell for papermill
 airport_code = "EGLL"
 model = "ACCESS-ESM1-5"
 batch = False
-_2030 = False
 measure = "mean"
 
 # %%
@@ -741,7 +740,6 @@ for period in tqdm(periods):
         + "_"
         + airport_code
         + "_JJA"
-        + "_2030" * (_2030 == True)
         + ".pkl"
     )
     if measure == "mean":
@@ -1088,7 +1086,6 @@ it only depends on the smallest one!
 
     def calculate_geodetic_area(path):
         vertices = path.vertices
-        lons, lats = vertices[:, 0], vertices[:, 1]
         poly = Polygon(vertices)
         area, _ = geod.geometry_area_perimeter(poly)
         return area
@@ -1112,7 +1109,6 @@ it only depends on the smallest one!
             + airport_code
             + "_"
             + model
-            + "_2030" * (_2030 == True)
             + "_"
             + period
         ] = X_deg_rotated
@@ -1122,7 +1118,6 @@ it only depends on the smallest one!
             + airport_code
             + "_"
             + model
-            + "_2030" * (_2030 == True)
             + "_"
             + period
         ] = Y_deg_rotated
@@ -1132,12 +1127,11 @@ it only depends on the smallest one!
             + airport_code
             + "_"
             + model
-            + "_2030" * (_2030 == True)
             + "_"
             + period
         ] = J_max
 
-        filename = airport_code + "_" + model + "_2030" * (_2030 == True) + ".pkl"
+        filename = airport_code + "_" + model +  ".pkl"
 
         if not os.path.exists("contours"):
             os.makedirs("contours")
@@ -1163,7 +1157,6 @@ df.to_csv(
     + airport_code
     + "_"
     + model
-    + "_2030" * (_2030 == True)
     + ".csv",
     index=False,
     header=True,
@@ -1194,7 +1187,6 @@ df.to_csv(
     + airport_code
     + "_"
     + model
-    + "_2030" * (_2030 == True)
     + ".csv",
     index=False,
     header=True,
@@ -1226,7 +1218,6 @@ for idx, _airport_code in enumerate(airport_codes):
         for filename in os.listdir(directory)
         if (_airport_code in filename)
         and ("mean" in filename)
-        and ("_2030" in filename if _2030 else "_2030" not in filename)
     ]:
         df = pd.read_csv(os.path.join(directory, filename))
         dataframes.append(df)
@@ -1492,7 +1483,6 @@ for idx, _airport_code in enumerate(airport_codes):
         for filename in os.listdir(directory)
         if (_airport_code in filename)
         and ("mean" in filename)
-        and ("_2030" in filename if _2030 else "_2030" not in filename)
     ]:
 
         df = pd.read_csv(os.path.join(directory, filename))
@@ -1842,7 +1832,6 @@ for period in periods:
             + "LESO"
             + "_"
             + _model
-            + "_2030" * (_2030 == True)
             + ".csv"
         )[0]
         df = pd.read_csv(file)
@@ -1866,7 +1855,6 @@ for period in periods:
             + "EGLC"
             + "_"
             + _model
-            + "_2030" * (_2030 == True)
             + ".csv"
         )[0]
         df = pd.read_csv(file)

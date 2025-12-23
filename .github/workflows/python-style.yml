@@ -22,9 +22,9 @@ jobs:
         run: |
           python -m compileall -q .
 
-      - name: Install Black
-        run: pip install black
+      - name: Install Ruff
+        run: pip install ruff
 
-      - name: Check formatting with Black
-        run: black --check --diff .
+      - name: Lint with Ruff
+        run: ruff check noyse.py
 

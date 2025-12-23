@@ -1,4 +1,4 @@
-name: Black formatting & Python syntax check
+name: Python syntax check, and linting with Ruff
 
 on:
   pull_request:

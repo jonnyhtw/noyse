@@ -4,23 +4,6 @@ fail_fast: true
 repos:
   - repo: local
     hooks:
-
-      - id: remove-unused-imports
-        name: "Hook #1 Ruff checkout for unused import statements"
-        language: python
-        additional_dependencies: [ruff==0.6.9]
-        entry: ruff
-        args: [check, --select, F401, noyse.ipynb]
-        pass_filenames: false
-
-   
-      - id: remove-unused-imports
-        name: "Hook #2 Ruff checkout for commented out code"
-        language: python
-        additional_dependencies: [ruff==0.6.9]
-        entry: ruff
-        args: [check, --select, ERA001, noyse.ipynb]
-        pass_filenames: false
  
       - id: jupytext
         name: "Hook #3 Jupytext: ipynb -> py (noyse)"

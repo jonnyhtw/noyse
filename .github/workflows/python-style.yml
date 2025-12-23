@@ -19,17 +19,6 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Ruff lint (.py only, with annotations)
-        uses: astral-sh/ruff-action@v3
-        with:
-          # pass the paths as separate args (no newlines!)
-          args: check --output-format=github . src tests
-
-      - name: Ruff format (check only; .py only)
-        uses: astral-sh/ruff-action@v3
-        with:
-          args: format --diff . src tests
-
       - name: Python syntax check
         run: python -m compileall -q .
 

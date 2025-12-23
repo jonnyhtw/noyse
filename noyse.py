@@ -15,27 +15,19 @@
 
 # %%
 import copy
-
 import csv
 import glob
-import numpy as np
-from scipy.stats import qmc
-
 import math
-from matplotlib.ticker import FormatStrFormatter
-
 import os
-from matplotlib.ticker import FormatStrFormatter
-
 import pickle
-import matplotlib.ticker as ticker
 
 import jupyter_black
-import glob
-
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 import numpy as np
 import seaborn as sns
+from matplotlib.ticker import FormatStrFormatter
+from scipy.stats import qmc
 
 jupyter_black.load()
 
@@ -44,47 +36,23 @@ import string
 import airportsdata
 import cartopy.io.img_tiles as cimgt
 import matplotlib.patches as patches
-import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 import scipy
-import seaborn as sns
 import xarray as xr
 from IPython.core.interactiveshell import InteractiveShell
-from matplotlib.ticker import (
-    FormatStrFormatter,
-)
 from rich.jupyter import print
-from tqdm.notebook import tqdm
 
 InteractiveShell.ast_node_interactivity = "last_expr"
-import copy
-import csv
-import math
-import os
-import string
 import sys
 
-import airportsdata
 import cartopy.crs as ccrs
-import cartopy.io.img_tiles as cimgt
-import pandas as pd
-
-import matplotlib.patches as patches
-from matplotlib.patches import Ellipse
-
 import matplotlib.image as mpimg
+from matplotlib.patches import Ellipse
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
-
-import matplotlib.pyplot as plt
-import numpy as np
 
 InteractiveShell.ast_node_interactivity = "all"
 
 from matplotlib.colors import TwoSlopeNorm
-
-import scipy
-import seaborn as sns
 from pyproj import Geod
 from scipy.ndimage import gaussian_filter1d
 from shapely.geometry import Polygon
@@ -525,7 +493,6 @@ x = np.linspace(-2, 2, 100)
 inset_ax.plot(x, np.exp(-(x**2)), color="r", linewidth=2, alpha=0.5)
 
 
-
 inset_ax.patch.set_alpha(0.5)
 # Hide the top, right, and bottom spines
 inset_ax.spines["top"].set_visible(False)
@@ -739,8 +706,6 @@ axes[0].set_ylim(bottom=lhc_I0s[0])
 [ax.yaxis.set_major_formatter(FormatStrFormatter("%g")) for ax in axes]
 
 [ax.tick_params(axis="y", which="both", length=0) for ax in axes]
-
-
 
 
 [ax.set_xlim(7.2, 7.7) for ax in [axes[0]]]
@@ -997,7 +962,6 @@ for period in tqdm(periods):
 
     J_max = np.max(Js, axis=0)
 
-
     J_maxs[period] = J_max
 
     request = cimgt.OSM()
@@ -1135,7 +1099,6 @@ it only depends on the smallest one!
         transform=ccrs.PlateCarree(),
     )
 
-
     if airport_code == "LGHI":
         ax2.remove()
         ax2 = fig.add_subplot(122)
@@ -1166,7 +1129,6 @@ it only depends on the smallest one!
     total_areas.append(total_area / 1e6)
 
     areas[period] = total_area
-
 
     save_contours = False
 
@@ -1524,7 +1486,6 @@ for idx, _airport_code in tqdm(enumerate(airport_codes)):
     axes[idx].tick_params(axis="x", labelsize=8)
     axes[idx].tick_params(axis="y", labelsize=8)
 
-
     axes[idx].set(ylabel=None)
     axes[idx].set_xlim(0, 5)
     axes[idx].set_facecolor("whitesmoke")
@@ -1600,7 +1561,6 @@ for idx, _airport_code in enumerate(airport_codes):
         else:
 
             pass
-
 
         floats_only_dict[
             _airport_code + "_" + period + "_" + "population_at_" + str(my_freq) + "_Hz"
@@ -1711,7 +1671,6 @@ for idf, _my_freq in enumerate(my_freqs):
             population_percentage_numbers[
                 _airport_code + "_" + period + "_at_" + str(_my_freq) + "_Hz"
             ] = np.max(plotthis[plotthis <= upper_whisker_threshold])
-
 
             axes[idf].boxplot(
                 plotthis,
@@ -1964,7 +1923,6 @@ obj = pd.read_pickle(
 )
 
 # %%
-
 period = "ssp585"
 
 _climb_angle = np.degrees(

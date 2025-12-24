@@ -142,7 +142,7 @@ periods = ["historical", "ssp126", "ssp370", "ssp585"]
 Rspecific = 287.052874
 
 # %%
-# make sure I understand fundamental maths!
+# Sense check
 math.degrees(math.asin(math.sin(math.radians(10))))
 
 math.degrees(scipy.constants.pi)
@@ -2006,4 +2006,4 @@ cbar.ax.xaxis.set_major_formatter(FormatStrFormatter("%g"))
 plt.savefig("Figures/Figure6.svg", dpi=300, bbox_inches="tight")
 
 plt.show()
-
+# pug=1

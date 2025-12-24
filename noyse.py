@@ -2006,4 +2006,3 @@ cbar.ax.xaxis.set_major_formatter(FormatStrFormatter("%g"))
 plt.savefig("Figures/Figure6.svg", dpi=300, bbox_inches="tight")
 
 plt.show()
-# pug=1

@@ -1104,34 +1104,17 @@ it only depends on the smallest one!
     save_contours = False
 
     if save_contours:
-        contours_dict[
-            "X_deg_rotated_"
-            + airport_code
-            + "_"
-            + model
-            + "_"
-            + period
-        ] = X_deg_rotated
+        contours_dict["X_deg_rotated_" + airport_code + "_" + model + "_" + period] = (
+            X_deg_rotated
+        )
 
-        contours_dict[
-            "Y_deg_rotated_"
-            + airport_code
-            + "_"
-            + model
-            + "_"
-            + period
-        ] = Y_deg_rotated
+        contours_dict["Y_deg_rotated_" + airport_code + "_" + model + "_" + period] = (
+            Y_deg_rotated
+        )
 
-        contours_dict[
-            "J_max_"
-            + airport_code
-            + "_"
-            + model
-            + "_"
-            + period
-        ] = J_max
+        contours_dict["J_max_" + airport_code + "_" + model + "_" + period] = J_max
 
-        filename = airport_code + "_" + model +  ".pkl"
+        filename = airport_code + "_" + model + ".pkl"
 
         if not os.path.exists("contours"):
             os.makedirs("contours")
@@ -1181,13 +1164,7 @@ if not os.path.exists("areas"):
 
 # Write DataFrame to a CSV file in the "areas" directory
 df.to_csv(
-    "areas/areas_"
-    + measure
-    + "_"
-    + airport_code
-    + "_"
-    + model
-    + ".csv",
+    "areas/areas_" + measure + "_" + airport_code + "_" + model + ".csv",
     index=False,
     header=True,
 )
@@ -1216,8 +1193,7 @@ for idx, _airport_code in enumerate(airport_codes):
     for filename in [
         filename
         for filename in os.listdir(directory)
-        if (_airport_code in filename)
-        and ("mean" in filename)
+        if (_airport_code in filename) and ("mean" in filename)
     ]:
         df = pd.read_csv(os.path.join(directory, filename))
         dataframes.append(df)
@@ -1481,8 +1457,7 @@ for idx, _airport_code in enumerate(airport_codes):
     for filename in [
         filename
         for filename in os.listdir(directory)
-        if (_airport_code in filename)
-        and ("mean" in filename)
+        if (_airport_code in filename) and ("mean" in filename)
     ]:
 
         df = pd.read_csv(os.path.join(directory, filename))
@@ -1850,13 +1825,7 @@ for period in periods:
     areas_array = []
 
     for _model in models:
-        file = glob.glob(
-            "./areas/areas_mean_"
-            + "EGLC"
-            + "_"
-            + _model
-            + ".csv"
-        )[0]
+        file = glob.glob("./areas/areas_mean_" + "EGLC" + "_" + _model + ".csv")[0]
         df = pd.read_csv(file)
         filtered_df = df[df["Key"].str.contains(period)]
         filtered_df = filtered_df[~filtered_df["Key"].str.contains("percent")]
@@ -2006,3 +1975,7 @@ cbar.ax.xaxis.set_major_formatter(FormatStrFormatter("%g"))
 plt.savefig("Figures/Figure6.svg", dpi=300, bbox_inches="tight")
 
 plt.show()
+
+# %%
+
+# %%
